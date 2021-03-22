@@ -1,0 +1,271 @@
+@CHARSET "UTF-8";
+
+button{outline:none;}
+li {display:inline-block; vertical-align:top; list-style: none; padding: 6px;}
+input[type=text],
+input[type=password],
+input[type=tel],
+select,
+textarea{display: inline-block; min-width:70px; height: 40px; line-height: 40px; padding: 2px 2px 2px 10px; border: 1px solid #d9d9d9; color: #8F8F91; box-sizing:border-box;} 
+textarea{display:block; width:100%; height:100px; line-height:23px;}
+.input_area input{width:100%;}
+.input_area ~ .input_area{margin-top: 5px; }
+.input_area .join_title{margin-bottom:10px;}
+
+.btn_area .btn_common{display: inline-block; position: relative; width: 100%; height: 60px; line-height: 60px; font-size: 16px; color:#fff; border: 1px solid #3a4050; border-radius: 3px; background: #3a4050; text-align: center; outline: none; text-decoration: none;}
+.btn_area .btn_gray{background: #8c8c8c; border: 0 none;}
+.btn_area .btn_common ~ .btn_common{margin-top: 5px;}
+
+/* 로그인 */
+.login{margin: 150px auto 0; display: block; width: 400px;}
+.login .title{text-align: center;} 
+.login > form{margin-top: 30px;}
+.login .btn_area{margin-top:10px;}
+
+.login_btn_area{margin-top: 5px;}
+.login_btn_area .save_id{font-size: 12px;}
+.login_btn_area .find_area{margin-top: 5px;}
+.login_btn_area .find_area button{background: 0 none; border: 0; font-size: 12px; outline: none;}
+
+/* 공통 헤더 */
+.header{margin: 0 auto; padding: 50px 0; width: 1300px; }
+.header .headerInner{ position: relative;}
+.header .headerInner .logo{ text-align: center;}
+.header .headerInner .logo a{font-size: 18px; line-height: 20px; letter-spacing: -0.5px; color: #000; font-weight: bold; text-decoration: none;}
+.header .headerInner .leftMenu{position: absolute; left: 0; top: 0; font-size: 0;}
+.header .headerInner .leftMenu > li{display: inline-block; vertical-align: top;}
+.header .headerInner .leftMenu > li a{display: block; text-decoration: none; padding: 10px 10px 0; margin: 0; letter-spacing: 1px; font-size: 12px; color: #000; font-weight: normal;}
+.header .headerInner .rightMenu{position: absolute; right: 0; top: 0; font-size: 0;}
+.header .headerInner .rightMenu > li{display: inline-block; vertical-align: top;}
+.header .headerInner .rightMenu > li a,
+.header .headerInner .rightMenu > li span{display: block; text-decoration: none; padding: 10px 10px 0; margin: 0; letter-spacing: 1px; font-size: 12px; color: #000; font-weight: normal;}
+.header .headerInner .rightMenu > li span em{font-style: normal; color:dodgerblue}
+
+/* 게시판 */
+.boardArea{margin-top:30px; padding:0 20px;}
+.boardArea table{width:100%;}
+.boardArea th {padding: 11px 0 12px; font-size: 15px; line-height: 17px; font-weight: 500; border: 1px solid #e8e8e8; border-bottom: 0 none; background: #e2f0f3;}
+.boardArea td {font-size: 14px; line-height: 17px; font-weight: 400; border-left: 1px solid #e8e8e8; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; padding: 10px 5px;}
+.boardArea .pagination{width:100%;text-align:center; box-sizing:border-box; padding:0;}
+.tableArea{margin-top:10px;}
+.btnArea {margin-top:10px; text-align:right;}
+.btnArea button,
+.btnArea a{display:inline-block; vertical-align:top; margin-left:10px; padding: 0 20px; height:30px; line-height:30px; text-align:center; background:#999; color:#fff;}
+.searchArea button{display:inline-block; vertical-align:top; padding: 0 20px; height: 40px; line-height: 40px; text-align: center; background: #999; color: #fff;}
+.formArea{margin:50px auto; width:1000px; padding:20px;}
+.formArea input{margin-bottom:10px;}
+.formArea h2{margin-bottom: 30px; text-align:center;}
+
+/* 공통 팝업 */
+#pop{z-index:100; display:none; position: fixed; left: 0; right: 0; top: 0; bottom: 0; background:rgba(0,0,0,0.3);}
+#pop.on{display:block;}
+#pop .pop_in{z-index:101;position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);padding: 30px;width: 400px;border: 1px solid #ccc;background: #fff;box-sizing: border-box;}
+#pop .pop_in .title{font-size: 20px; color: #000;}
+#pop .pop_in .input_wrap{margin-top: 15px;}
+#pop .pop_in .input_wrap input{display: inline-block; margin-top: 10px; width: 100%; height: 40px; line-height: 40px; padding: 0 10px; box-sizing: border-box; border: 1px solid #ddd; font-size: 13px; color: #000;}
+#pop .pop_in .input_wrap label{display: inline-block; width: 100%; font-size: 13px; color: #000;}
+#pop .pop_in .btn_area{margin-top: 30px;}
+#pop .pop_in .btn_area .btn_common{display: inline-block; height: 60px; line-height: 60px; text-align: center; font-size: 15px; font-weight: 500;}
+#pop .pop_in .btn_area .btn_common ~ .btn_common{margin-top: 5px;}
+
+/* 채팅방 스타일 */
+.chatbox {
+    position: relative;
+    margin: 0 auto; 
+    height: 75%;
+    width: 60%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgb(119 119 119 / 50%);
+}
+.top-bar {
+    width: 100%;
+    height: 60px;
+    background: #F9FBFF;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(to bottom left, #79C7C5 20%, #A1E2D9 100%);
+  border-radius: 50%;
+  position: absolute;
+  top: 11px;
+  left: 15px;
+}
+.avatar p {
+  color: #F9FBFF;
+  margin: 7px 12px;
+}
+
+.name {
+  position: absolute;
+  top: 22px;
+  text-transform: uppercase;
+  color: #777777;
+  font-size: 0.8em;
+  letter-spacing: 2px;
+  font-weight: 500;
+  left: 60px;
+}
+
+.menu {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  width: 10px;
+  height: 20px;
+  cursor: pointer;
+}
+.menu:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in;
+}
+
+.icons {
+  position: absolute;
+  color: #A1E2D9;
+  padding: 10px;
+  top: 5px;
+  right: 21px;
+  cursor: pointer;
+}
+.icons .fas {
+  padding: 5px;
+  opacity: 0.8;
+}
+.icons .fas:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in;
+}
+
+.dots {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #79C7C5;
+  box-shadow: 0px 7px 0px #79C7C5, 0px 14px 0px #79C7C5;
+}
+
+.middle {
+  position: absolute;
+  background: #F9FBFF;
+  width: 100%;
+  opacity: 0.85;
+  top: 61px;
+  height: calc(100% - 115px);
+}
+
+.incoming {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  padding: 20px;
+}
+.incoming .bubble > span {
+	display:inline-block;
+	padding: 10px 10px 10px 12px;
+	border-radius: 20px;
+	background: #b2b2b2;
+}
+
+.typing {
+  position: absolute;
+  top: 67%;
+  left: 20px;
+}
+.typing .bubble {
+  background: #eaeaea;
+  padding: 8px 13px 9px 13px;
+}
+
+.ellipsis {
+  width: 5px;
+  height: 5px;
+  display: inline-block;
+  background: #b7b7b7;
+  border-radius: 50%;
+  animation: bounce 1.3s linear infinite;
+}
+
+.one {
+  animation-delay: 0.6s;
+}
+
+.two {
+  animation-delay: 0.5s;
+}
+
+.three {
+  animation-delay: 0.8s;
+}
+
+.bubble {
+  position: relative;
+  display: block;
+  margin-bottom: 5px;
+  color: #F9FBFF;
+  font-size: 0.7em;
+}
+
+.lower {
+  margin-top: 45px;
+}
+
+.outgoing {
+  position: absolute;
+  padding: 20px;
+  right: 0;
+  top: 15%;
+  width: 50%;
+  height: 100%;
+}
+.outgoing .bubble {
+	overflow:hidden;
+}
+
+.outgoing .bubble > span {
+	display:inline-block;
+    float: right;
+	padding: 10px 10px 10px 12px;
+	border-radius: 20px;
+	background: #79C7C5;
+}
+.bottom-bar {
+  position: absolute;
+  width: 100%;
+  height: 55px;
+  bottom: 0;
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+  border-top: 1px solid #ddd;
+}
+.bottom-bar .chat{
+	position:relative;
+	margin-top:7px;
+	padding-right:50px;
+	box-sizing:border-box;
+}
+.bottom-bar input {
+    padding: 7px;
+    width: 100%;
+    border: 0;
+    background: #fff;
+    color: #79C7C5;
+}
+.bottom-bar button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding:0 10px;
+    border: 0;
+    height:40px;
+    line-height:40px;
+    font-size: 1em;
+    color: #79C7C5;
+    opacity: 0.8;
+    cursor: pointer;
+    outline: 0;
+}

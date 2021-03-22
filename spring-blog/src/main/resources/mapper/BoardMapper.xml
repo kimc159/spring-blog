@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.project.blog.board.mapper.BoardMapper">
+		
+	<select id="list" resultType="com.project.blog.board.BoardVO">
+		select 
+			* 
+		from 
+			(select 
+				row_number() over(order by seq desc) num,
+				b.*
+			from 
+				board b
+				<include refid="search" /> 
+			order by 
+				board_group desc, 
+				board_seq asc) 
+			where 
+				num 
+			between 
+				#{rowStart} 
+			and 
+				#{rowEnd}
+	</select>  
+	
+	<insert id="write" parameterType="com.project.blog.board.BoardVO">
+		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
+			select 
+				board_seq.nextval 
+			from
+				DUAL
+		</selectKey>
+		insert into 
+			board (
+				seq, 
+				writer, 
+				title, 
+				content, 
+				board_group, 
+				board_seq, 
+				board_level
+			) 
+			values (
+				#{seq}, 
+				#{writer}, 
+				#{title}, 
+				#{content}, 
+				(select NVL(max(board_group)+1, 0) from board),
+				0, 
+				0
+			)
+	</insert> 
+	
+	<insert id="reply" parameterType="com.project.blog.board.BoardVO">
+		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
+			select 
+				board_seq.nextval 
+			from 
+				DUAL
+		</selectKey>
+		insert into 
+			board (
+				seq, 
+				writer, 
+				title, 
+				content, 
+				board_group, 
+				board_seq, 
+				board_level
+			) 
+			values (
+				#{seq}, 
+				#{writer}, 
+				#{title}, 
+				#{content}, 
+				#{board_group}, 
+				#{board_seq} + 1, 
+				#{board_level} + 1
+			)
+	</insert>
+	
+	<update id="replyUp" parameterType="com.project.blog.board.BoardVO">
+		update 
+			board 
+		set 
+			board_seq = board_seq + 1 
+		where 
+			board_group = #{board_group} 
+		and 
+			board_seq > #{board_seq}
+	</update> 
+	
+	<select id="selectBoard" resultType="com.project.blog.board.BoardVO" parameterType="int">
+		select 
+			* 
+		from 
+			board 
+		where 
+			seq = #{seq}
+	</select>
+	 
+	<update id="updateBoard" parameterType="com.project.blog.board.BoardVO">
+		update 
+			board 
+		set 
+			title=#{title}, 
+			writer=#{writer}, 
+			content=#{content} 
+		where 
+			seq = #{seq}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete from 
+			board 
+		where 
+			seq = #{seq}
+	</delete>
+	
+	<select id="totalCount" resultType="int">
+		select 
+			count(*) 
+		from 
+			board 
+		<include refid="search" />
+	</select>
+	
+	<update id="countUp" parameterType="int">
+		update 
+			board 
+		set 
+			cnt = cnt+1 
+		where 
+			seq = #{seq}
+	</update>
+	
+	<sql id="search"> 
+		<if test="searchType == ''"></if>
+		<if test="searchType == 'all'">
+			where 
+				title 
+			like 
+				'%'||#{keyword}||'%' 
+			or 
+				content like '%'||#{keyword}||'%' 
+		</if>
+		
+		<if test="searchType == 'title'"> 
+			where 
+				title 
+			like 
+				'%'||#{keyword}||'%'
+		</if>
+		
+		<if test="searchType == 'content'">
+			where 
+				content 
+			like 
+				'%'||#{keyword}||'%' 
+		</if>
+	</sql>
+</mapper>

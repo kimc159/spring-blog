@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//src/main/webapp/WEB-INF/views/chat/chat.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/chat/newRoom.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/chat/room.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/chat/rooms.jsp=UTF-8
