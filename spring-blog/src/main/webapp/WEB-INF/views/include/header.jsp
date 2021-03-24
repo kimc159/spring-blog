@@ -10,7 +10,7 @@
 <html> 
 <head> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title>스프링 실습 사이트</title>
+	<title>블로그 사이트</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/global.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 	
@@ -24,14 +24,11 @@
 	    <div class="headerInner">
 	        <ul class="leftMenu">
 	            <li>
-	                <a href="/findUser">친구 찾기</a>
-	            </li>
-	            <li>
 	                <a href="/board/list">게시판</a>
 	            </li>
 	        </ul>
 	        <h1 class="logo">
-	            <a href="/main">스프링 채팅</a>
+	            <a href="/main">블로그</a>
 	        </h1>
 	        <ul class="rightMenu">
 				<c:if test="${empty login.memId}">

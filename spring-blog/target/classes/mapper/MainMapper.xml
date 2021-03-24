@@ -51,4 +51,36 @@
 		where 
 			memId = #{memID}
 	</select>
+	
+	<select id="findId" resultType="String">
+		select 
+			memId
+		from
+			member
+		where
+			memEmail = #{memEmail}
+	</select>
+	
+	<select id="findPassword" resultType="int">
+		select 
+			count(memPassword)
+		from
+			member
+		where 
+			memId = #{memId}
+		and
+			memEmail = #{memEmail}
+	</select>
+	
+	<update id="updatePassword" parameterType="hashMap">
+		update
+			member
+		set
+			memPassword = #{memPassword},
+			salt = #{salt}
+		where
+			memId = #{memId}
+		and
+			memEmail = #{memEmail}
+	</update>
 </mapper>

@@ -1,6 +1,5 @@
 package com.project.blog.main.dao;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -28,5 +27,15 @@ public class MemberDao implements MemberDaoImpl{
 	}
 	public String getSaltById(String memId) {
 		return session.selectOne(namespace + ".salt", memId);
+	}
+	public String findId(String email) {
+		return session.selectOne(namespace + ".findId", email);
+	}
+	public int findPassword(Map map) {
+		return session.selectOne(namespace + ".findPassword", map);
+	}
+
+	public int updatePassword(Map<String, Object> map) {
+		return session.update(namespace + ".updatePassword", map);
 	}
 }

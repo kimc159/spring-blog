@@ -1,6 +1,8 @@
 package com.project.blog.main.service;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -68,5 +70,41 @@ public class MemberService implements MemberServiceImpl{
 	}
 	public String getSaltById(String memId) {
 		return memberDao.getSaltById(memId);
+	}
+	public String findId(String email) {
+		return memberDao.findId(email);
+	}
+	public String findPassword(String memId, String memEmail) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memId", memId);
+		map.put("memEmail", memEmail);
+		
+		int result = memberDao.findPassword(map);
+		
+		if(result == 1) {
+			StringBuffer ranNum = new StringBuffer();
+			
+			Random ran = new Random();
+			for(int i=0; i<6; i++) {
+				ranNum.append(ran.nextInt(10));
+			}
+			
+			String salt = SHA256Util.generateSalt();
+			MemberVO member = new MemberVO();
+			member.setSalt(salt); 
+			
+			String password = ranNum.toString();
+			password = SHA256Util.getEncrypt(password, salt);
+			
+			map.put("memPassword", password);
+			map.put("salt", salt);
+			
+			memberDao.updatePassword(map);
+			
+			return ranNum.toString();
+		} else {
+			return "-1";
+		}
+		
 	}
 }

@@ -1,69 +1,55 @@
 
 // 아이디 찾기
 function findId() {
+	var findEmail = $("#findEmail").val();
 	
-	var email = $("#findEmail").val();
-	
-	$.ajax( 
-        {
-			url:"./login/findId",
-            data : { 
-            	email: email
-            	},              /*html, text, json, xml, script*/
-            type : 'post', 
-            dataType : 'json',
-            success : function(rs){
-                console.log("success"); 
-                console.log(rs); 
-                if(rs.id == null) {
-					alert("아이디가 없습니다.");
-                } else {
-	                alert("아이디는 " + rs.id + " 입니다.");
-                }
-            },
-            error : function(xhr, status, error){
-            	console.log(xhr);
-            	console.log(status);
-            	console.log(error);
-            }
-        }
-    );
+	$.ajax({
+		url: "./findId",
+		data: {
+			email : findEmail
+		},
+		type:"post",
+		dayaType:"json",
+		success : function(rs) {
+			var result = rs.result;
+			if(result !== null) {
+				alert("아이디는 : " + result + " 입니다.");
+			} else {
+				alert("아이디가 없습니다.");
+			}
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	})
 }
 
 // 비밀번호 찾기
 function findPassword() {
-
-	var id = $("#findId").val();
-	var email = $("#findEmail2").val();
+	var findId = $("#findId").val();
+	var findEmail2 = $("#findEmail2").val();
 	
-	$.ajax( 
-     {
-		 url:"./login/findPassword",
-         data : { 
-          	id: id,
-         	email: email
-         	},              /*html, text, json, xml, script*/
-         type : 'post', 
-         dataType : 'json',
-         success : function(rs){
-             console.log("success"); 
-             console.log(rs); 
-             if(rs.result === "1") {
-            	 alert("이메일로 임시 비밀번호가 발급되었습니다.");
-             	location.href="/login";
-             } else if(rs.result === null) {
-            	 alert("회원이 없습니다.");
-             } else {
-            	 alert("데이터베이스 오류가 발생했습니다.");
-             }
-         },
-         error : function(xhr, status, error){
-         	console.log(xhr);
-         	console.log(status);
-         	console.log(error);
-         }
-     }
- );
+	$.ajax({
+		url: "./findPassword",
+		data: {
+			id : findId,
+			email : findEmail2
+		},
+		type:"post",
+		dayaType:"json",
+		success : function(rs) {
+			console.log(rs);
+			var result = rs.result;
+			if(result !== null && result !== "-1") {
+				alert("임시 비밀번호 : " + result + " 입니다.");
+			} else {
+				alert("아이디와 이메일을 정확히 입력해주세요.");
+			}
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	})
 }
 
 // 로그인
