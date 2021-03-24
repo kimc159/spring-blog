@@ -1,5 +1,6 @@
 package com.project.blog.main;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,9 +29,9 @@ public class MainController {
 	
 	private MailSendService mss = new MailSendService();
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String chat() {
-		return "/test";
+	@RequestMapping(value = "/redirect")
+	public String redirect() {
+		return "common/redirect";
 	}
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
@@ -75,31 +77,43 @@ public class MainController {
 	}
 	
 	 @RequestMapping(value="/join/joinOk", method=RequestMethod.POST)
-	 public  String joinOk(MemberVO member) {
+	 public  String joinOk(MemberVO member, HttpServletResponse response, Model model) throws IOException {
 		
+		// 임의의 난수 생성
 		String salt = SHA256Util.generateSalt();
-		member.setSalt(salt); 
+		member.setSalt(salt);
 		
+		// SHA256 비밀번호 암호화
 		String password = member.getMemPassword();
 		password = SHA256Util.getEncrypt(password, salt);
 		member.setMemPassword(password);
 
 		 // 저장
-		 int result = service.join(member);
-		 // 인증 키 생성 및 이메일 발솔
+		int result = service.join(member);
 		
-		/*
-		 * String authKey = mss.sendAuthMail(member.getMemEmail());
-		 * member.setAuthKey(authKey);
-		 */
-		
-		 Map<String, String> map = new HashMap<String, String>();
-		 map.put("email", member.getMemEmail()); 
-		// map.put("authKey", authKey);
-		 
-		 //service.updateAuthKey(map);
-		 
-		 return "redirect:/login";
+		if(result == 1) {
+			 // 인증 키 생성 및 이메일 발솔
+			
+			/*
+			 * String authKey = mss.sendAuthMail(member.getMemEmail());
+			 * member.setAuthKey(authKey);
+			 */
+			
+			 Map<String, String> map = new HashMap<String, String>();
+			 map.put("email", member.getMemEmail()); 
+			// map.put("authKey", authKey);
+			 
+			 //service.updateAuthKey(map);
+			 model.addAttribute("url", "/login");
+			 model.addAttribute("msg", "회원가입이 완료되었습니다.");
+			
+			 return "common/redirect"; 
+		} else {
+			 model.addAttribute("url", "/join");
+			 model.addAttribute("msg", "데이터베이스 오류가 발생했습니다.");
+			 return "common/redirect";
+		} 
+
 	 /*int result = service.join(member);
 		 
 		 //임의의 authKey 생성 & 이메일 발송 

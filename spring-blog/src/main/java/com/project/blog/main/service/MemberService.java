@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.blog.config.SessionConfig;
 import com.project.blog.login.LoginVO;
 import com.project.blog.main.dao.MemberDao;
 import com.project.blog.member.MemberVO;
@@ -31,10 +32,10 @@ public class MemberService implements MemberServiceImpl{
 	
 	public int login(LoginVO loginVO, HttpServletResponse response, HttpSession session) {
 		
-		MemberVO mem = memberDao.login(loginVO.getMemId());
+		LoginVO mem = memberDao.login(loginVO.getMemId());
 		
 		if(mem != null) {
-			// SHA256
+			// SHA256로 비밀번호 암호화
 			String salt = getSaltById(loginVO.getMemId());
 			loginVO.setMemPassword(SHA256Util.getEncrypt(loginVO.getMemPassword(), salt));
 			
@@ -52,7 +53,10 @@ public class MemberService implements MemberServiceImpl{
 				cookie.setPath("/");
 				response.addCookie(cookie);
 				
-				// 세션 생성 및 유지시한
+				// 중복 로그인 확인
+				SessionConfig.getSessionidCheck("user_id", loginVO.getMemId().toString());
+				// 세션 생성 및 유지시한				
+				session.setAttribute("user_id", loginVO.getMemId());
 				session.setAttribute("login", loginVO);
 				session.setMaxInactiveInterval(60 * 60);
 				 
