@@ -30,8 +30,8 @@
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> 
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/> 
 		<beans:property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl" /> 
-		<beans:property name="username" value=""/> 
-		<beans:property name="password" value=""/> 
+		<beans:property name="username" value="C##root"/> 
+		<beans:property name="password" value="1234"/> 
 	</beans:bean>  
 	
 	

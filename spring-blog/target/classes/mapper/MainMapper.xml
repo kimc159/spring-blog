@@ -34,7 +34,7 @@
 		update member set AUTHKEY = #{authKey} where memEmail = #{email}
 	</update>
 	
-	<select id="login" resultType="com.project.blog.member.MemberVO">
+	<select id="login" resultType="com.project.blog.login.LoginVO">
 		select
 			*
 		from
