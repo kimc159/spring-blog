@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.blog.login.LoginVO;
 import com.project.blog.member.MemberVO;
 
 @Repository
@@ -18,8 +19,7 @@ public class MemberDao implements MemberDaoImpl{
 	public int join(MemberVO member) {
 		return session.insert(namespace + ".join", member);
 	}
-	
-	public MemberVO login(String memId) {
+	public LoginVO login(String memId) {
 		return session.selectOne(namespace + ".login", memId);
 	}
 	public int updateAuthKey(Map map) {

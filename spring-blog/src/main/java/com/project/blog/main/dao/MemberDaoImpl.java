@@ -2,11 +2,12 @@ package com.project.blog.main.dao;
 
 import java.util.Map;
 
+import com.project.blog.login.LoginVO;
 import com.project.blog.member.MemberVO;
 
 public interface MemberDaoImpl {
 	public int join(MemberVO member);
-	public MemberVO login(String memId);
+	public LoginVO login(String memId);
 	public int updateAuthKey(Map map);
 	public String getSaltById(String memId);
 	public String findId(String email);
