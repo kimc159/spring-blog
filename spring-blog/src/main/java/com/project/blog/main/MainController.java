@@ -48,6 +48,12 @@ public class MainController {
 
 		return "join/join";
 	}
+	
+	@RequestMapping(value = "/join/modify", method = RequestMethod.GET)
+	public String modify(HttpSession session, Model model) {
+		model.addAttribute("member", service.selectMember(session.getAttribute("user_id").toString()));
+		return "join/modify";
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/login/loginOk")
@@ -77,7 +83,13 @@ public class MainController {
 	
 	 @RequestMapping(value="/join/joinOk", method=RequestMethod.POST)
 	 public  String joinOk(MemberVO member, HttpServletResponse response, Model model) throws IOException {
-		
+
+		 if(member.getMemPassword() == null || member.getMemPassword().equals("")) {
+			 model.addAttribute("url", "/join/modify");
+			 model.addAttribute("msg", "비밀번호를 입력해주세요.");
+			 return "common/redirect";
+		 }
+		 
 		// 임의의 난수 생성
 		String salt = SHA256Util.generateSalt();
 		member.setSalt(salt);
@@ -112,7 +124,7 @@ public class MainController {
 			 model.addAttribute("msg", "데이터베이스 오류가 발생했습니다.");
 			 return "common/redirect";
 		} 
-
+		
 	 /*int result = service.join(member);
 		 
 		 //임의의 authKey 생성 & 이메일 발송 
@@ -128,7 +140,40 @@ public class MainController {
 		 service.updateAuthKey(map); 
 		 return "redirect: /"; */
 	 }
-	 
+
+	 @RequestMapping(value="/join/modifyOk", method=RequestMethod.POST)
+	 public  String modifyOk(MemberVO member, Model model) throws IOException {
+		
+		 if(member.getMemPassword() == null || member.getMemPassword().equals("")) {
+			 model.addAttribute("url", "/join/modify");
+			 model.addAttribute("msg", "비밀번호를 입력해주세요.");
+			 return "common/redirect";
+		 }
+		 
+		// 임의의 난수 생성
+		String salt = SHA256Util.generateSalt();
+		member.setSalt(salt);
+		
+		// SHA256 비밀번호 암호화
+		String password = member.getMemPassword();
+		password = SHA256Util.getEncrypt(password, salt);
+		member.setMemPassword(password);
+
+		 // 저장
+		int result = service.modify(member);
+		
+		if(result == 1) {
+			 model.addAttribute("url", "/board/list");
+			 model.addAttribute("msg", "정보수정이 완료되었습니다.");
+			
+			 return "common/redirect"; 
+		} else {
+			 model.addAttribute("url", "/join/modify");
+			 model.addAttribute("msg", "데이터베이스 오류가 발생했습니다.");
+			 return "common/redirect";
+		} 
+		
+	 }
 
 //	@RequestMapping(value="/join/joinConfirm")
 //	public String joinConfirm(MemberVO member) {

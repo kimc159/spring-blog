@@ -14,4 +14,6 @@ public interface MemberDaoImpl {
 	public int findPassword(Map<String, Object> map);
 	public int updatePassword(Map<String, Object> map);
 	public int idCheck(String id);
+	public int modify(MemberVO member);
+	public MemberVO selectMember(String memberId);
 }

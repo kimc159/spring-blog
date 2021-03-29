@@ -42,7 +42,7 @@
 						</c:forEach>
 						
 					${list.title}</a></td>
-					<td><fmt:formatDate pattern="yyyy-mm-dd hh:mm:ss" value="${list.regDate}" /></td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd H:MM" value="${list.regDate}" /></td>
 					<td>${list.writer}</td> 
 					<td>${list.hit}</td> 
 				</tr>
@@ -93,7 +93,7 @@
 $(function() {
 	$("#perPageSelect").on("change", function() {
 		var perPageNum = $(this).val();
-		location.href="/board/list?page=1&perPageNum=" + perPageNum;
+		location.href="/board/list?page=1&perPageNum=" + perPageNum + "&searchType=${scri.searchType}&keyword=${scri.keyword}";
 	});
 });
 </script>

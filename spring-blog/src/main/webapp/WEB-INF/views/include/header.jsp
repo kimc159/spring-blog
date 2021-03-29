@@ -39,7 +39,7 @@
 		                <span><em>${login.memId}</em> 님</span>
 		            </li>
 		            <li>
-		                <a href="/join">정보수정</a>
+		                <a href="/join/modify">정보수정</a>
 		            </li>
 		            <li>
 		                <a href="/logout">로그아웃</a>

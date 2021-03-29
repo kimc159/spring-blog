@@ -115,4 +115,12 @@ public class MemberService implements MemberServiceImpl{
 	public int idCheck(String id) {
 		return memberDao.idCheck(id);
 	}
+	public int modify(MemberVO member) {
+		// TODO Auto-generated method stub
+		return memberDao.modify(member);
+	}
+	public MemberVO selectMember(String memberId) {
+		// TODO Auto-generated method stub
+		return memberDao.selectMember(memberId);
+	}
 }

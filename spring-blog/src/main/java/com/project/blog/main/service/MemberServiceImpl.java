@@ -17,4 +17,6 @@ public interface MemberServiceImpl {
 	public String findId(String email);
 	public String findPassword(String id, String email);
 	public int idCheck(String id);
+	public int modify(MemberVO member);
+	public MemberVO selectMember(String memberId);
 }

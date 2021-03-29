@@ -41,4 +41,12 @@ public class MemberDao implements MemberDaoImpl{
 	public int idCheck(String id) {
 		return session.selectOne(namespace + ".idCheck", id);
 	}
+	public int modify(MemberVO member) {
+		// TODO Auto-generated method stub
+		return session.update(namespace + ".modify", member);
+	}
+	public MemberVO selectMember(String memberId) {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace + ".selectMember", memberId);
+	}
 }

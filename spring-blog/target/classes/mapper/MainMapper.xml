@@ -6,16 +6,16 @@
 	>
 		insert into 
 			member (
-				MEMID,
-				MEMPASSWORD,
-				MEMNAME,
-				MEMBIRTHDAY,
-				MEMGENDER,
-				MEMEMAIL,
-				MEMPHONE,
-				AUTHKEY,
-				AUTHSTATUS,
-				SALT
+				memId,
+				memPassword,
+				memName,
+				memBirthDay,
+				memGender,
+				memEmail,
+				memPhone,
+				authKey,
+				authStatus,
+				salt
 			)
 		values ( 
 			#{memId},
@@ -30,10 +30,28 @@
 			#{salt}
 		)
 	</insert>
+	
+	<update id="modify" parameterType="com.project.blog.member.MemberVO">
+		update
+			member
+		set
+			memPassword = #{memPassword},
+			memName = #{memName},
+			memBirthDay = #{memBirthDay},
+			memGender = #{memGender},
+			memEmail = #{memEmail},
+			memPhone = #{memPhone},
+			authKey = 0,
+			authStatus = 0,
+			salt = #{salt}
+		where 
+			memId = #{memId}
+	</update>
+	
 	<update id="updateAuthKey" parameterType="hashMap" >
 		update member set AUTHKEY = #{authKey} where memEmail = #{email}
 	</update>
-	
+	 
 	<select id="login" resultType="com.project.blog.login.LoginVO">
 		select
 			*
@@ -92,4 +110,13 @@
 		where
 			memId = #{memId}
 	</select>
+	<select id="selectMember" resultType="com.project.blog.member.MemberVO">
+		select
+			*
+		from
+			member
+		where
+			memId = #{memId}
+	</select>
+	
 </mapper>
