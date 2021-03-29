@@ -1,5 +1,10 @@
 package com.project.blog.board;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.blog.board.service.BoardService;
+import com.project.blog.util.ScriptUtils;
 
 @Controller
 public class BoardController {
@@ -41,7 +47,7 @@ public class BoardController {
 		
 		service.write(bo);
 		
-		return "redirect:/list";
+		return "redirect:/board/list";
 	}
 
 	@RequestMapping(value="board/replyForm")
@@ -62,7 +68,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="board/modify")
-	public String modify(Model model, @RequestParam(value="seq") int seq) {
+	public String modify(Model model, @RequestParam(value="seq") int seq, 
+			@RequestParam(value="board_writer") String board_writer, HttpSession session, HttpServletResponse response) {
+		
+		// 게시글 작성자가 아니면 수정 불가
+		if(!session.getAttribute("user_id").toString().equals(board_writer)) {
+			try {
+				ScriptUtils.alertAndMovePage(response, "수정 권한이 없습니다.", "/board/list");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		model.addAttribute("board", service.selectBoard(seq));
 		
@@ -74,7 +90,27 @@ public class BoardController {
 		
 		service.updateBoard(bo);
 		
-		return "redirect: /boardDetail?seq=" + bo.getSeq();
+		return "redirect:/board/boardDetail?seq=" + bo.getSeq();
+	}
+	
+	@RequestMapping(value="board/delete")
+	public String delete(Model model, @RequestParam(value="seq") int seq,
+			@RequestParam(value="board_writer") String board_writer, HttpSession session, HttpServletResponse response) {
+
+		// 게시글 작성자가 아니면 삭제 불가
+		if(!session.getAttribute("user_id").toString().equals(board_writer)) {
+			try {
+				ScriptUtils.alertAndMovePage(response, "삭제 권한이 없습니다.", "/board/list");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		service.deleteBoard(seq);
+		
+		model.addAttribute("msg", "삭제가 완료되었습니다.");
+		model.addAttribute("url", "/board/list");
+		
+		return "common/redirect";
 	}
 	
 	@RequestMapping(value="board/boardDetail")
@@ -88,11 +124,4 @@ public class BoardController {
 	}
 	
 
-	@RequestMapping(value="board/delete")
-	public String detail(@RequestParam(value="seq") int seq) {
-		
-		service.deleteBoard(seq);
-		 
-		return "redirect: /board/list";
-	}
 }
