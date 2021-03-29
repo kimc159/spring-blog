@@ -2,8 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 	<script>
-		alert("${msg}");a
+		alert("${msg}");
 		location.href = "<c:out value='${pageContext.request.contextPath}'/>${url}";
 	</script>
 </body>
 </html>
+ 

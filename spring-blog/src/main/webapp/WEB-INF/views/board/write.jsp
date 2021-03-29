@@ -1,17 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %> 
-<h2 style="text-align: center;">글 작성</h2>
 
 <div class="formArea">
-	<form method="post" action="/write">
-		<input type="text" name="writer" style="width: 20%;" placeholder="작성자"/><br>
-		<input type="text" name="title" style="width: 40%;" placeholder="제목"/>
+	<h2>글 작성</h2>
+	<form method="post" action="/board/write">
+		<input type="hidden" name="writer" id="writer" placeholder="작성자" value="${login.memId}"/>
+		<div class="boardInputArea">
+			<label for="writer" id="writerLabel">작성자 : ${login.memId} </label>
+		</div>
+		<div class="boardInputArea">
+			<input type="text" name="title" style="width: 40%;" placeholder="제목"/>
+		</div>
+		<div class="boardInputArea">
+			<textarea id="summernote" name="content"></textarea>
+		</div>
 		
-		<textarea id="summernote" name="content"></textarea>
 		
 		<div class="btnArea">
 			<button type="button" onclick="goWrite(this.form)">글 작성</button>
+			<button type="button" onclick="history.back(-1);">취소</button>
 		</div>
 	</form>
 </div>
@@ -23,10 +31,6 @@ function goWrite(frm) {
 	
 	if (title.trim() == ''){
 		alert("제목을 입력해주세요");
-		return false;
-	}
-	if (writer.trim() == ''){
-		alert("작성자를 입력해주세요");
 		return false;
 	}
 	if (content.trim() == ''){

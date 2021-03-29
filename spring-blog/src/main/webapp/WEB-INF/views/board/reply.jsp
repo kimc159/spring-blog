@@ -4,15 +4,26 @@
 <h2 style="text-align: center;">글 작성</h2><br><br><br>
 
 <div style="width: 60%; margin: auto;">
-	<form method="post" action="/reply">
+	<form method="post" action="/board/reply">
 		<input type="hidden" name="board_group" value="${board.board_group}" />
 		<input type="hidden" name="board_seq" value="${board.board_seq}" />
 		<input type="hidden" name="board_level" value="${board.board_level}" />
-		<input type="text" name="writer" style="width: 20%;" placeholder="작성자"/><br>
-		<input type="text" name="title" style="width: 40%;" placeholder="제목"/>
-		<br><br> 
-		<textarea id="summernote" name="content"></textarea>
-		<input id="subBtn" type="button" value="글 작성" style="float: right;" onclick="goWrite(this.form)"/>
+		
+		<div class="boardInputArea">
+			<input type="hidden" name="writer" id="writer" style="width: 20%;" placeholder="작성자" value="${login.memId}"/>
+			<label for="writer" id="writerLabel">작성자 : ${login.memId} </label>
+		</div>
+		<div class="boardInputArea">
+			<input type="text" name="title" style="width: 40%;" placeholder="제목"/>
+		</div>
+		<br> 
+		<div class="boardInputArea">
+			<textarea id="summernote" name="content"></textarea>
+		</div>
+		<div class="btnArea">
+			<button type="button" onclick="goWrite(this.form)">댓글 작성</button>
+			<button type="button" onclick="history.back(-1);">취소</button>
+		</div>
 	</form>
 </div>
 <script>

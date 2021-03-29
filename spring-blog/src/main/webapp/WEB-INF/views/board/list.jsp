@@ -22,6 +22,7 @@
 					<th>제목</th>
 					<th>내용</th>
 					<th>날짜</th>
+					<th>작성자</th>
 					<th>조회수</th>
 					<th>group</th>
 					<th>seq</th>
@@ -32,9 +33,10 @@
 			<c:forEach items="${list}" var="list">
 				<tr>
 					<td>${list.seq}</td>
-					<td><a href="boardDetail?seq=${list.seq}">${list.title}</a></td>
+					<td><a href="boardDetail?seq=${list.seq}">${list.title}</a></td> 
 					<td>${list.content}</td>
-					<td>${list.regDate}</td>
+					<td><fmt:formatDate pattern="yyyy-mm-dd hh:mm:ss" value="${list.regDate}" /></td>
+					<td>${list.writer}</td> 
 					<td>${list.cnt}</td> 
 					<td>${list.board_group}</td> 
 					<td>${list.board_seq}</td>
