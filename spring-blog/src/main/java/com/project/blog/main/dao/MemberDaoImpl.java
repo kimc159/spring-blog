@@ -13,4 +13,5 @@ public interface MemberDaoImpl {
 	public String findId(String email);
 	public int findPassword(Map<String, Object> map);
 	public int updatePassword(Map<String, Object> map);
+	public int idCheck(String id);
 }

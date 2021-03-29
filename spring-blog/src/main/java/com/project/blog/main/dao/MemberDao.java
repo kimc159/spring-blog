@@ -38,4 +38,7 @@ public class MemberDao implements MemberDaoImpl{
 	public int updatePassword(Map<String, Object> map) {
 		return session.update(namespace + ".updatePassword", map);
 	}
+	public int idCheck(String id) {
+		return session.selectOne(namespace + ".idCheck", id);
+	}
 }

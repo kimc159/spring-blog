@@ -73,7 +73,7 @@ function login() {
                 	alert("이메일 인증이 안료되지 않았습니다.");
                 } else if(rs.result === 1) {
                 	alert("로그인이 성공하엿습니다."); 
-                	location.href="/main";
+                	location.href="/board/list";
                 } else if(rs.result === 0){
                 	alert("비밀번호가 일치하지 않습니다.");
                 } else {
@@ -100,6 +100,31 @@ function popFindPassword() {
 function popClose(thisobj){
 	var $this = $(thisobj);
 	
-	$this.closest(".popCon").removeClass("on"); 
+	$this.closest(".popCon").removeClass("on");
+}
+// 아이디 중복 체크
+function idCheck() {
+	var idText = $("#memId").val();
 	
+	if($("#memId").val() === "") {
+		alert("아이디를 입력해주세요.");
+		return false;
+	}
+	$.ajax( 
+        {
+			url:"./idCheck",
+            data : {id:idText},              /*html, text, json, xml, script*/
+            type : 'post', 
+            dataType : 'json',
+            success : function(rs){
+                if(rs.result === "1") {
+                	alert("이미 존재하는 아이디입니다.");
+                } else {
+                	alert("사용할수 있는 아이디입니다.");
+                }
+            },
+            error : function(xhr, status, error){
+            }
+        }
+    );
 }

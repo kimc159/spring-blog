@@ -16,4 +16,5 @@ public interface MemberServiceImpl {
 	public String getSaltById(String memId);
 	public String findId(String email);
 	public String findPassword(String id, String email);
+	public int idCheck(String id);
 }

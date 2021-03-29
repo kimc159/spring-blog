@@ -175,4 +175,17 @@ public class MainController {
 		 return rs;
 	 }
 	 
+	 @ResponseBody
+	 @RequestMapping(value = "idCheck", method=RequestMethod.POST)
+	 public Map<String, Object> idCheck(@RequestParam("id") String id) {
+		 
+		 int result = service.idCheck(id);
+		 
+		 Map<String, Object> rs = new HashMap<String, Object>();
+		 
+		 rs.put("result", result);
+		 
+		 return rs;
+	 }
+	 
 }

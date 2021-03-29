@@ -57,8 +57,9 @@ public class MemberService implements MemberServiceImpl{
 				SessionConfig.getSessionidCheck("user_id", loginVO.getMemId().toString());
 				// 세션 생성 및 유지시한				
 				session.setAttribute("user_id", loginVO.getMemId());
+				session.setMaxInactiveInterval(3600);
 				session.setAttribute("login", loginVO);
-				session.setMaxInactiveInterval(60 * 60);
+				session.setMaxInactiveInterval(3600);
 				 
 				return 1;
 			} else {
@@ -110,5 +111,9 @@ public class MemberService implements MemberServiceImpl{
 			return "-1";
 		}
 		
+	}
+	
+	public int idCheck(String id) {
+		return memberDao.idCheck(id);
 	}
 }

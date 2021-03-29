@@ -83,4 +83,13 @@
 		and
 			memEmail = #{memEmail}
 	</update>
+	
+	<select id="idCheck" resultType="int">
+		select
+			count(*)
+		from
+			member
+		where
+			memId = #{memId}
+	</select>
 </mapper>
