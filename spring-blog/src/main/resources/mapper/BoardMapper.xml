@@ -53,45 +53,45 @@
 	
 	<insert id="reply" parameterType="com.project.blog.board.BoardVO">
 		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
-			select 
-				board_seq.nextval 
-			from 
-				DUAL
+			select board_seq.nextVal from dual
 		</selectKey>
-		insert into 
+		insert into
 			board (
-				seq, 
-				writer, 
-				title, 
-				content, 
-				board_group, 
-				board_seq, 
+				seq,
+				title,
+				writer,
+				content,
+				hit,
+				board_group,
+				board_seq,
 				board_level
-			) 
-			values (
-				#{seq}, 
-				#{writer}, 
-				#{title}, 
-				#{content}, 
-				#{board_group}, 
-				#{board_seq} + 1, 
-				#{board_level} + 1
 			)
+		values (
+			#{seq},
+			#{title},
+			#{writer},
+			#{content},
+			0,
+			#{board_group},
+			#{board_seq} + 1,
+			#{board_level}+1 
+		)
+			
 	</insert>
 	
 	<update id="replyUp" parameterType="com.project.blog.board.BoardVO">
 		update 
-			board 
-		set 
-			board_seq = board_seq + 1 
-		where 
-			board_group = #{board_group} 
-		and 
+			board
+		set
+			board_seq = board_seq + 1
+		where
+			board_group = #{board_group}
+		and
 			board_seq > #{board_seq}
 	</update> 
 	
 	<select id="selectBoard" resultType="com.project.blog.board.BoardVO" parameterType="int">
-		select 
+		select  
 			* 
 		from 
 			board 
@@ -124,15 +124,39 @@
 			board 
 		<include refid="search" />
 	</select>
-	
-	<update id="countUp" parameterType="int">
+	<!-- board 조회수 증가 -->
+	<update id="hitUp" parameterType="int">
 		update 
 			board 
 		set 
-			cnt = cnt+1 
+			hit = hit+1 
 		where 
 			seq = #{seq}
 	</update>
+	<!-- board_hit 조회수 증가 ()-->
+	<insert id="boardHit" parameterType="hashMap">
+		insert into
+			board_hit (
+				hit_seq,
+				hit_writer,
+				hit_replyer
+			)
+		values (
+			#{hit_seq},
+			#{hit_writer},
+			#{hit_replyer}
+		)
+	</insert>
+	<select id="selectHitSeq" parameterType="hashMap" resultType="int">
+		select
+			count(*)
+		from
+			board_hit
+		where
+			hit_seq = #{hit_seq}
+		and
+			hit_replyer = #{hit_replyer}
+	</select>
 	
 	<sql id="search"> 
 		<if test="searchType == ''"></if>

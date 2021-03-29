@@ -1,6 +1,7 @@
 package com.project.blog.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,14 @@ public class BoardDao implements BoardDaoImpl {
 	public int totalCount(SearchCriteria scri) {
 		return session.selectOne(namespace + ".totalCount", scri); 
 	}
-	public int countUp(int seq) {
-		return session.update(namespace + ".countUp", seq);
+	public int hitUp(int seq) {
+		return session.update(namespace + ".hitUp", seq);
+	}
+	public int boardHit(Map<String, Object> map) {
+		return session.insert(namespace + ".boardHit", map);
+	}
+	public int selectHitSeq(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace + ".selectHitSeq", map);
 	}
 }

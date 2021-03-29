@@ -33,11 +33,10 @@ public class MainController {
 	public String redirect() {
 		return "common/redirect";
 	}
-
-	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main() {
-		return "index";
-	}
+	/*
+	 * @RequestMapping(value = "/main", method = RequestMethod.GET) public String
+	 * main() { return "index"; }
+	 */
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {

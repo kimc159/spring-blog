@@ -1,6 +1,8 @@
 package com.project.blog.board;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -114,11 +116,30 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="board/boardDetail")
-	public String detail(Model model, @RequestParam(value="seq") int seq) {
+	public String detail(Model model, @RequestParam(value="seq") int seq, @RequestParam(value="writer") String writer, HttpSession session) {
 		
 		model.addAttribute("board", service.selectBoard(seq));
 		
-		service.countUp(seq);  
+		// 내 글인지 여부확인
+		if(!session.getAttribute("user_id").toString().equals(writer)) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("hit_seq", seq);
+			map.put("hit_writer", writer);
+			map.put("hit_replyer", session.getAttribute("user_id").toString());
+			
+			int selectHit = service.selectHitSeq(map);
+			
+			System.out.println("hit : " + selectHit);
+			
+			// 조회수 중복 확인
+			if(selectHit == 0) {
+				service.hitUp(seq);
+				
+				service.boardHit(map);
+				
+			}
+		}
+		
 		 
 		return "board/boardDetail";
 	}

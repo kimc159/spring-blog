@@ -1,6 +1,7 @@
 package com.project.blog.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,16 @@ public class BoardService implements BoardServiceImpl {
 		return dao.totalCount(scri);
 	}
 	@Override
-	public int countUp(int seq) {
-		return dao.countUp(seq);
+	public int hitUp(int seq) {
+		return dao.hitUp(seq);
+	}
+	@Override
+	public int boardHit(Map<String, Object> map) {
+		return dao.boardHit(map);
+	}
+
+	public int selectHitSeq(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.selectHitSeq(map);
 	}
 }

@@ -22,13 +22,8 @@
 <body>
 	<div id="header" class="header">
 	    <div class="headerInner">
-	        <ul class="leftMenu">
-	            <li>
-	                <a href="/board/list">게시판</a>
-	            </li>
-	        </ul>
 	        <h1 class="logo">
-	            <a href="/main">블로그</a>
+	            <a href="/board/list">블로그</a>
 	        </h1>
 	        <ul class="rightMenu">
 				<c:if test="${empty login.memId}">

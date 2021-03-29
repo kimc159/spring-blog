@@ -57,12 +57,11 @@ public class MemberService implements MemberServiceImpl{
 				SessionConfig.getSessionidCheck("user_id", loginVO.getMemId().toString());
 				// 세션 생성 및 유지시한				
 				session.setAttribute("user_id", loginVO.getMemId());
-				session.setMaxInactiveInterval(3600);
 				session.setAttribute("login", loginVO);
-				session.setMaxInactiveInterval(3600);
-				 
-				return 1;
-			} else {
+				session.setMaxInactiveInterval(24 * 60* 60); 
+				  
+				return 1; 
+			} else { 
 				// 비밀번호 틀림
 				return 0;
 			}

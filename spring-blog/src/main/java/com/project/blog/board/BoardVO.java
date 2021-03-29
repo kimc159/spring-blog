@@ -8,7 +8,7 @@ public class BoardVO {
 	private String writer;
 	private String content;
 	private Date regDate;
-	private int cnt;
+	private int hit;
 	private int board_group;
 	private int board_seq;
 	private int board_level;
@@ -55,12 +55,12 @@ public class BoardVO {
 		this.regDate = regDate;
 	}
 
-	public int getCnt() {
-		return cnt;
+	public int getHit() {
+		return hit;
 	}
 
-	public void setCnt(int cnt) {
-		this.cnt = cnt;
+	public void setHit(int hit) {
+		this.hit = hit;
 	}
 
 	public int getBoard_group() {
@@ -90,7 +90,7 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [seq=" + seq + ", title=" + title + ", writer=" + writer + ", content=" + content + ", regDate="
-				+ regDate + ", cnt=" + cnt + ", board_group=" + board_group + ", board_seq=" + board_seq
+				+ regDate + ", hit=" + hit + ", board_group=" + board_group + ", board_seq=" + board_seq
 				+ ", board_level=" + board_level + "]";
 	}
 }

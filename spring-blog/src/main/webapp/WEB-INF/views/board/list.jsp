@@ -16,31 +16,35 @@
 	 </div>
  	<div class="tableArea">
 		<table border="1">
+			<colgroup>
+				<col style="width: "/>
+				<col style="width: 50%;"/>
+				<col style="width: "/>
+				<col style="width: "/>
+				<col style="width: "/>
+			</colgroup>
 			<thead>
 				<tr>
 					<th>순서</th>
 					<th>제목</th>
-					<th>내용</th>
 					<th>날짜</th>
 					<th>작성자</th>
 					<th>조회수</th>
-					<th>group</th>
-					<th>seq</th>
-					<th>level</th>
 				</tr>
 			</thead>
 			<tbody>
 			<c:forEach items="${list}" var="list">
 				<tr>
 					<td>${list.seq}</td>
-					<td><a href="boardDetail?seq=${list.seq}">${list.title}</a></td> 
-					<td>${list.content}</td>
+					<td><a href="boardDetail?seq=${list.seq}&writer=${list.writer}">
+						<c:forEach begin="1" end="${list.board_level}">
+							->
+						</c:forEach>
+						
+					${list.title}</a></td>
 					<td><fmt:formatDate pattern="yyyy-mm-dd hh:mm:ss" value="${list.regDate}" /></td>
 					<td>${list.writer}</td> 
-					<td>${list.cnt}</td> 
-					<td>${list.board_group}</td> 
-					<td>${list.board_seq}</td>
-					<td>${list.board_level}</td> 
+					<td>${list.hit}</td> 
 				</tr>
 			</c:forEach>
 			</tbody>
