@@ -22,8 +22,8 @@ public class MemberDao implements MemberDaoImpl{
 	public LoginVO login(String memId) {
 		return session.selectOne(namespace + ".login", memId);
 	}
-	public int updateAuthKey(Map map) {
-		return session.update(namespace + ".updateKey", map);
+	public int updateAuthKey(Map<String, String> map) {
+		return session.update(namespace + ".updateAuthKey", map);
 	}
 	public String getSaltById(String memId) {
 		return session.selectOne(namespace + ".salt", memId);
@@ -31,7 +31,7 @@ public class MemberDao implements MemberDaoImpl{
 	public String findId(String email) {
 		return session.selectOne(namespace + ".findId", email);
 	}
-	public int findPassword(Map map) {
+	public int findPassword(Map<String, Object> map) {
 		return session.selectOne(namespace + ".findPassword", map);
 	}
 
@@ -48,5 +48,13 @@ public class MemberDao implements MemberDaoImpl{
 	public MemberVO selectMember(String memberId) {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".selectMember", memberId);
+	}
+	public int joinConfirm(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.update(namespace + ".joinConfirm", map);
+	}
+	public int memberAuthStatus(LoginVO loginVO) {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace + ".memberAuthStatus", loginVO);
 	}
 }

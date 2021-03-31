@@ -26,7 +26,7 @@ public class MemberService implements MemberServiceImpl{
 	public int join(MemberVO member) {
 		return memberDao.join(member);
 	}
-	public int updateAuthKey(Map map) {
+	public int updateAuthKey(Map<String, String> map) {
 		return memberDao.updateAuthKey(map);
 	}
 	
@@ -122,5 +122,13 @@ public class MemberService implements MemberServiceImpl{
 	public MemberVO selectMember(String memberId) {
 		// TODO Auto-generated method stub
 		return memberDao.selectMember(memberId);
+	}
+	public int joinConfirm(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return memberDao.joinConfirm(map);
+	}
+	public int memberAuthStatus(LoginVO loginVO) {
+		// TODO Auto-generated method stub
+		return memberDao.memberAuthStatus(loginVO);
 	}
 }

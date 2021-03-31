@@ -27,16 +27,13 @@ public class MainController {
 	@Autowired
 	private MemberService service;
 	
-	private MailSendService mss = new MailSendService();
+	@Autowired
+	private MailSendService mss;
 
 	@RequestMapping(value = "/redirect")
 	public String redirect() {
 		return "common/redirect";
 	}
-	/*
-	 * @RequestMapping(value = "/main", method = RequestMethod.GET) public String
-	 * main() { return "index"; }
-	 */
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
@@ -63,7 +60,14 @@ public class MainController {
 
 		Map<String, Object> rs = new HashMap<String, Object>();
 		if (result == 1) {
-			rs.put("result", 1);
+			int authStatus = service.memberAuthStatus(loginVO);
+			
+			if(authStatus == 1) {// 이메일 인증 한 상태
+				rs.put("result", 1);
+			} else { // 이메일 인증 안한 상태
+				rs.put("result", -2);
+			}
+			
 		} else if (result == 0) {
 			rs.put("result", 0);
 		} else {
@@ -81,15 +85,15 @@ public class MainController {
 		return "redirect:/login";
 	}
 	
-	 @RequestMapping(value="/join/joinOk", method=RequestMethod.POST)
-	 public  String joinOk(MemberVO member, HttpServletResponse response, Model model) throws IOException {
+	@RequestMapping(value="/join/joinOk", method=RequestMethod.POST)
+	public  String joinOk(MemberVO member, HttpServletResponse response, Model model) throws IOException {
 
-		 if(member.getMemPassword() == null || member.getMemPassword().equals("")) {
+		if(member.getMemPassword() == null || member.getMemPassword().equals("")) {
 			 model.addAttribute("url", "/join/modify");
 			 model.addAttribute("msg", "비밀번호를 입력해주세요.");
 			 return "common/redirect";
-		 }
-		 
+		}
+		
 		// 임의의 난수 생성
 		String salt = SHA256Util.generateSalt();
 		member.setSalt(salt);
@@ -98,23 +102,21 @@ public class MainController {
 		String password = member.getMemPassword();
 		password = SHA256Util.getEncrypt(password, salt);
 		member.setMemPassword(password);
-
+		member.setAuthKey("1");
 		 // 저장
 		int result = service.join(member);
-		
+
 		if(result == 1) {
 			 // 인증 키 생성 및 이메일 발솔
-			
-			/*
-			 * String authKey = mss.sendAuthMail(member.getMemEmail());
-			 * member.setAuthKey(authKey);
-			 */
-			
-			 Map<String, String> map = new HashMap<String, String>();
-			 map.put("email", member.getMemEmail()); 
-			// map.put("authKey", authKey);
 			 
-			 //service.updateAuthKey(map);
+			String authKey = mss.sendAuthMail(member.getMemEmail());
+			member.setAuthKey(authKey);
+			
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("email", member.getMemEmail()); 
+			map.put("authKey", authKey);
+			 
+			 service.updateAuthKey(map);
 			 model.addAttribute("url", "/login");
 			 model.addAttribute("msg", "회원가입이 완료되었습니다.");
 			
@@ -124,23 +126,26 @@ public class MainController {
 			 model.addAttribute("msg", "데이터베이스 오류가 발생했습니다.");
 			 return "common/redirect";
 		} 
-		
-	 /*int result = service.join(member);
-		 
-		 //임의의 authKey 생성 & 이메일 발송 
-		 String authKey = mss.sendAuthMail(member.getMemEmail()); 
-		 member.setAuthKey(authKey);
-		 
-		 Map<String, String> map = new HashMap<String, String>(); 
-		 map.put("email", member.getMemEmail()); 
-		 map.put("authKey", member.getAuthKey());
-		 System.out.println(map);
-		 
-		 //DB에 authKey 업데이트 
-		 service.updateAuthKey(map); 
-		 return "redirect: /"; */
 	 }
+	 
+	 @RequestMapping(value="/join/confirm")
+	 public String joinConfirm(Model model, @RequestParam("email") String email, @RequestParam("authKey") String authKey) {
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 map.put("email", email);
+		 map.put("authKey", authKey);
+		 
+		int result = service.joinConfirm(map);
 
+		if(result == 1) {
+			model.addAttribute("url", "/login");
+			model.addAttribute("msg", "이메일 인증이 완료되었습니다.");	
+		} else {
+			model.addAttribute("url", "/login");
+			model.addAttribute("msg", "이메일 인증이 오류가 발생했습니다.");
+		}
+		 return "common/redirect";
+	 }
+	 
 	 @RequestMapping(value="/join/modifyOk", method=RequestMethod.POST)
 	 public  String modifyOk(MemberVO member, Model model) throws IOException {
 		
@@ -174,24 +179,6 @@ public class MainController {
 		} 
 		
 	 }
-
-//	@RequestMapping(value="/join/joinConfirm")
-//	public String joinConfirm(MemberVO member) {
-//		 
-//		int result = service.join(member);
-//		 //임의의 authKey 생성 & 이메일 발송
-//        String authKey = mss.sendAuthMail(member.getMemEmail());
-//        member.setAuthKey(authKey);
-//
-//        Map<String, String> map = new HashMap<String, String>();
-//        map.put("email", member.getMemEmail());
-//        map.put("authKey", member.getAuthKey());
-//        System.out.println(map);
-//
-//      //DB에 authKey 업데이트
-//        service.updateAuthKey(map);
-//		return "redirect: /";
-//	}
 	 
 	 @ResponseBody
 	 @RequestMapping(value = "findId", method=RequestMethod.POST)
