@@ -92,7 +92,7 @@ public class BoardController {
 		
 		service.updateBoard(bo);
 		
-		return "redirect:/board/boardDetail?seq=" + bo.getSeq();
+		return "redirect:/board/boardDetail?seq=" + bo.getSeq() + "&writer=" + bo.getWriter();
 	}
 	
 	@RequestMapping(value="board/delete")
