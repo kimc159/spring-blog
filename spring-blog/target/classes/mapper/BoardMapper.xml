@@ -5,22 +5,24 @@
 	<select id="list" resultType="com.project.blog.board.BoardVO">
 		select 
 			* 
-		from 
-			(select 
-				row_number() over(order by seq desc) num,
-				b.*
-			from 
-				board b
-				<include refid="search" /> 
-			order by 
-				board_group desc, 
-				board_seq asc) 
-			where 
-				num 
-			between 
-				#{rowStart} 
-			and 
-				#{rowEnd}
+		from (
+			select 
+				rownum num,
+				b.* 
+			from (
+				select 
+					*  
+				from 
+					board 
+					<include refid="search" /> 
+				order by 
+					board_group desc,
+					board_seq asc
+				) b
+			)
+		 WHERE 
+		 	NUM 
+	 	BETWEEN #{rowStart} AND #{rowEnd}
 	</select>  
 	
 	<insert id="write" parameterType="com.project.blog.board.BoardVO">
