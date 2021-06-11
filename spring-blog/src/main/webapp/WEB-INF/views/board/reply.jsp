@@ -5,9 +5,9 @@
 
 <div style="width: 60%; margin: auto;">
 	<form method="post" action="/board/reply">
-		<input type="hidden" name="board_group" value="${board.board_group}" />
-		<input type="hidden" name="board_seq" value="${board.board_seq}" />
-		<input type="hidden" name="board_level" value="${board.board_level}" />
+		<input type="hidden" name="boardGroup" value="${board.boardGroup}" />
+		<input type="hidden" name="boardSeq" value="${board.boardSeq}" />
+		<input type="hidden" name="boardLevel" value="${board.boardLevel}" />
 		
 		<div class="boardInputArea">
 			<input type="hidden" name="writer" id="writer" style="width: 20%;" placeholder="작성자" value="${login.memId}"/>

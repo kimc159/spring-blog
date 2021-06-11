@@ -3,7 +3,7 @@
 function findId() {
 	var findEmail = $("#findEmail").val();
 	
-	$.ajax({
+	$.ajax({ 
 		url: "./findId",
 		data: {
 			email : findEmail
@@ -12,7 +12,7 @@ function findId() {
 		dayaType:"json",
 		success : function(rs) {
 			var result = rs.result;
-			if(result !== null) {
+			if(result !== null) { 
 				alert("아이디는 : " + result + " 입니다.");
 			} else {
 				alert("아이디가 없습니다.");
@@ -64,7 +64,7 @@ function login() {
             data : { 
             	memId: memId,
             	memPassword: memPassword,
-            	rememberId: rememberId
+				rememberId: rememberId
             	},              /*html, text, json, xml, script*/
             type : 'post', 
             dataType : 'json',
@@ -116,8 +116,9 @@ function idCheck() {
             data : {id:idText},              /*html, text, json, xml, script*/
             type : 'post', 
             dataType : 'json',
-            success : function(rs){
-                if(rs.result === "1") {
+            success : function(rs){ 
+				
+                if(rs.result === 1) {
                 	alert("이미 존재하는 아이디입니다.");
                 } else {
                 	alert("사용할수 있는 아이디입니다.");
@@ -127,4 +128,10 @@ function idCheck() {
             }
         }
     );
+}
+
+function removeFile(thisobj) {
+	var $this = $(thisobj);
+	
+	$this.parent(".uploaded_file").css("display", "none").closest(".boardInputArea").find(".select_file").css("display", "block"); 
 }

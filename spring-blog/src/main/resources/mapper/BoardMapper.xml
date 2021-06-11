@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="com.project.blog.board.mapper.BoardMapper">
+<mapper namespace="com.project.chat.board.mapper.BoardMapper">
 		
-	<select id="list" resultType="com.project.blog.board.BoardVO">
+	<select id="list" resultType="com.project.chat.board.BoardVO">
 		select 
 			* 
 		from (
@@ -14,10 +14,10 @@
 					*  
 				from 
 					board 
-					<include refid="search" /> 
+					<include refid="search" />
 				order by 
-					board_group desc,
-					board_seq asc
+					boardGroup desc,
+					boardSeq asc
 				) b
 			)
 		 WHERE 
@@ -25,10 +25,10 @@
 	 	BETWEEN #{rowStart} AND #{rowEnd}
 	</select>  
 	
-	<insert id="write" parameterType="com.project.blog.board.BoardVO">
+	<insert id="write" parameterType="com.project.chat.board.BoardVO">
 		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
 			select 
-				board_seq.nextval 
+				se_board_seq.nextval 
 			from
 				DUAL
 		</selectKey>
@@ -38,24 +38,26 @@
 				writer, 
 				title, 
 				content, 
-				board_group, 
-				board_seq, 
-				board_level
+				regDate,
+				boardGroup, 
+				boardSeq, 
+				boardLevel
 			) 
 			values (
 				#{seq}, 
 				#{writer}, 
 				#{title}, 
 				#{content}, 
-				(select NVL(max(board_group)+1, 0) from board),
+				sysdate,
+				(select NVL(max(boardGroup)+1, 0) from board),
 				0, 
 				0
-			)
+			) 
 	</insert> 
 	
-	<insert id="reply" parameterType="com.project.blog.board.BoardVO">
+	<insert id="reply" parameterType="com.project.chat.board.BoardVO">
 		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
-			select board_seq.nextVal from dual
+			select se_board_seq.nextVal from dual
 		</selectKey>
 		insert into
 			board (
@@ -64,9 +66,9 @@
 				writer,
 				content,
 				hit,
-				board_group,
-				board_seq,
-				board_level
+				boardGroup,
+				boardSeq,
+				boardLevel
 			)
 		values (
 			#{seq},
@@ -74,25 +76,25 @@
 			#{writer},
 			#{content},
 			0,
-			#{board_group},
-			#{board_seq} + 1,
-			#{board_level}+1 
+			#{boardGroup},
+			#{boardSeq} + 1,
+			#{boardLevel}+1 
 		)
 			
 	</insert>
 	
-	<update id="replyUp" parameterType="com.project.blog.board.BoardVO">
+	<update id="replyUp" parameterType="com.project.chat.board.BoardVO">
 		update 
 			board
 		set
-			board_seq = board_seq + 1
+			boardSeq = boardSeq + 1
 		where
-			board_group = #{board_group}
+			boardGroup = #{boardGroup}
 		and
-			board_seq > #{board_seq}
+			boardSeq > #{boardSeq}
 	</update> 
 	
-	<select id="selectBoard" resultType="com.project.blog.board.BoardVO" parameterType="int">
+	<select id="selectBoard" resultType="com.project.chat.board.BoardVO" parameterType="int">
 		select  
 			* 
 		from 
@@ -101,7 +103,7 @@
 			seq = #{seq}
 	</select>
 	 
-	<update id="updateBoard" parameterType="com.project.blog.board.BoardVO">
+	<update id="updateBoard" parameterType="com.project.chat.board.BoardVO">
 		update 
 			board 
 		set 
@@ -112,7 +114,7 @@
 			seq = #{seq}
 	</update>
 	
-	<delete id="deleteBoard" parameterType="int">
+	<delete id="deleteBoard" parameterType="int"> 
 		delete from 
 			board 
 		where 
@@ -159,10 +161,224 @@
 		and
 			hit_replyer = #{hit_replyer}
 	</select>
+	<!-- board 조회수 증가 -->
+	<update id="hitUp2" parameterType="int">
+		update
+			mp_board
+		set
+			hit = hit + 1
+		where
+			seq = #{seq}
+	</update>
 	
+	<select id="selectHitSeq2" parameterType="hashMap" resultType="int"> 
+		select
+			count(*)
+		from
+			board_hit 
+		where
+			hit_seq = #{hit_seq}
+		and
+			hit_replyer = #{hit_replyer}
+	</select>
+	
+	<select id="fileList" resultType="com.project.chat.board.BoardVO">
+		SELECT 
+			* 
+		FROM (
+				SELECT 
+					rownum AS num, 
+					s.* 
+				FROM (
+					SELECT 
+						b.* 
+					FROM 
+						mp_board b 
+					<include refid="search" />
+					ORDER BY 
+						BOARDGROUP DESC, BOARDSEQ
+			) s
+		) sub
+		WHERE 
+			sub.num 
+		BETWEEN 
+			#{rowStart} 
+		AND 
+			#{rowEnd}
+	</select> 
+	
+	<insert id="fileWrite" parameterType="com.project.chat.board.BoardVO" useGeneratedKeys="true" keyProperty="seq">
+		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
+			select MP_BOARD_SEQ.NEXTVAL from dual
+		</selectKey>
+		insert into 
+			mp_board (
+				seq, 
+				writer, 
+				title, 
+				content, 
+				regDate,
+				boardGroup, 
+				boardSeq, 
+				boardLevel
+			) 
+			values (
+				#{seq}, 
+				#{writer}, 
+				#{title}, 
+				#{content}, 
+				sysdate,
+				(select NVL(max(boardGroup)+1, 0) from mp_board),
+				0, 
+				0
+			) 
+	</insert>
+	
+	<insert id="insertFile" parameterType="hashMap">
+		<selectKey keyProperty="file_no" resultType="int" order="BEFORE">
+			select seq_mp_file_no.nextVal from dual
+		</selectKey>
+		insert into 
+			mp_file (
+				file_no,
+				seq,
+				org_file_name,
+				stored_file_name,
+				file_size,
+				regDate
+			) 
+			values (
+				#{file_no},
+				#{seq},
+				#{org_file_name},
+				#{stored_file_name},
+				#{file_size},
+				sysdate
+			)
+	</insert> 
+	
+	<select id="totalFileCount" resultType="int">
+		select 
+			count(*) 
+		from 
+			mp_board 
+		<include refid="search" />
+	</select>
+	
+	<select id="selectBoardFile" parameterType="int" resultType="com.project.chat.board.BoardVO">
+		select
+			mp_board.*,
+			mp_file.org_file_name,
+			mp_file.stored_file_name
+		from
+			mp_board
+		left join 
+			mp_file
+		on
+			mp_board.seq = mp_file.seq
+		where
+			mp_board.seq = #{seq}
+	</select>
+	
+	
+	<insert id="reply2" parameterType="com.project.chat.board.BoardVO">
+		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
+				select MP_BOARD_SEQ.NEXTVAL from dual
+		</selectKey>
+		insert into
+			mp_board(
+				  seq
+				, title
+				, content
+				, writer 
+				, regDate
+				, hit
+				, boardGroup
+				, boardSeq
+				, boardLevel
+			)
+		values (
+			  #{seq}
+			, #{title}
+			, #{content}
+			, #{writer}
+			, sysdate
+			, 0 
+			, #{boardGroup}
+			, #{boardSeq} + 1 
+			, #{boardLevel} + 1
+		)
+
+			
+	</insert>
+	
+	<update id="replyUp2" parameterType="com.project.chat.board.BoardVO">
+		update
+			mp_board
+		set
+			boardSeq = boardSeq + 1
+		where 
+			boardGroup = #{boardGroup}
+		and
+			boardSeq > #{boardSeq} 
+	</update>
+	<select id="selectBoard2" resultType="com.project.chat.board.BoardVO">
+		select
+			*
+		from
+			mp_board
+		left join
+			mp_file
+		on
+			mp_board.seq = mp_file.seq
+		where
+			mp_board.seq = #{seq} 
+	</select>
+	
+	<update id="updateBoard2" parameterType="com.project.chat.board.BoardVO">
+		update 
+			mp_board
+		set
+			title = #{title},
+			content = #{content}
+		where
+			seq = #{seq}
+	</update>
+	<delete id="deleteBoard2" >
+		delete from
+			mp_board	
+		where 
+			seq = #{seq12312} 
+	</delete>
+	<delete id="deleteBoardFile" >
+		delete from
+			mp_file	
+		where 
+			seq = #{seq}
+	</delete> 
+	<delete id="deleteBoardFileAll" parameterType="int">
+		delete from
+			mp_file	
+		where 
+			boardGroup = #{boardGroup}
+	</delete>
+	<select id="selectFile" resultType="com.project.chat.board.BoardVO">
+		select
+			*
+		from
+			mp_file
+		where 
+			seq = #{seq}
+	</select>
+	<delete id="deleteBoardComment" parameterType="int">
+		delete from
+			mp_board
+		where 	
+			boardGroup = #{boardGroup}
+	</delete>
 	<sql id="search"> 
 		<if test="searchType == ''"></if>
-		<if test="searchType == 'all'">
+		<if test="searchType == 'all'">  
 			where 
 				title 
 			like 
@@ -172,7 +388,7 @@
 		</if>
 		
 		<if test="searchType == 'title'"> 
-			where 
+			where  
 				title 
 			like 
 				'%'||#{keyword}||'%'

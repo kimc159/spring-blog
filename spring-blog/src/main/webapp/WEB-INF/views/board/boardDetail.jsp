@@ -18,7 +18,7 @@
 		</div>
 		<div class="contentArea">${board.content}</div>
 		<div class="btnArea">
-			<a href="/board/replyForm?board_group=${board.board_group}&board_seq=${board.board_seq}&board_level=${board.board_level}">댓글</a>
+			<a href="/board/replyForm?boardGroup=${board.boardGroup}&boardSeq=${board.boardSeq}&boardLevel=${board.boardLevel}">댓글</a>
 			<a href="/board/list">글목록</a>
 			<c:if test="${login.memId == board.writer}">
 				<a href="/board/modify?seq=${board.seq}&board_writer=${board.writer}">수정</a>

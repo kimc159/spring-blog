@@ -1,29 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 <body>
-	<c:set var="checked" value="" />
-	<c:if test="${not empty cookie.user_checked}">
+	<c:if test="${not empty cookie.rememberID}">
 		<c:set var="checked" value="checked" />
 	</c:if>
 	<div id="loginWrap">
 	    <!-- login -->
 		<div class="login">
 		    <h2 class="title">로그인</h2>
-		    <form name="loginForm" id="loginForm" method="post">
+		    <form name="loginForm" id="loginForm" method="post"> 
 		        <!-- input --> 
 		        <div class="login_input">
 		            <div class="input_area">
-		                <label for="id"><input type="text"  name="memId" id="memId" value="${cookie.user_checked.value}" onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)" placeholder="아이디" /></label>
-		            </div>
+		                <label for="id"><input type="text"  name="memId" id="memId" value="${cookie.rememberID.value}" onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)" placeholder="아이디" /></label>
+		            </div> 
 		            <div class="input_area">
 		                <label for="pw"><input type="password" name="memPassword" id="memPassword" value="" onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)" placeholder="비밀번호" /></label>
-		            </div>
+		            </div> 
 		            <div class="btn_area">
 		                <button type="button" id="loginBtn" class="btn_common btn_primary" onClick="login()">로그인</button>
 		                <a href="/join" class="btn_common btn_gray">회원가입</a>
 		            </div>
 		        </div>
-		        <div class="login_btn_area"> 
+		        <div class="login_btn_area">
 		            <div class="save_id">
 		                <input type="checkbox" name="rememberId" id="rememberId" ${checked} />
 		                <label for="rememberId">아이디저장</label>

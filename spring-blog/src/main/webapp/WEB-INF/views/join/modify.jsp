@@ -47,8 +47,8 @@
 			    <div class="error_next_box" id="birthdayMsg" style="" aria-live="assertive">태어난 년도 4자리를 정확하게 입력하세요.</span>
 			</div>
 			<div class="input_area join_sex">
-                <h3 class="join_title"><label for="memGender">성별</label></h3>
-                <div class="ps_box gender_code">
+                <h3 class="join_title"><label for="memGender">성별${member.memGender == 'M'}</label></h3>
+                <div class="ps_box gender_code"> 
                     <select id="memGender" name="memGender" class="sel" aria-label="성별">
                         <option value="" >성별</option>
                                 <option value="M" <c:if test="${member.memGender == 'M'}"> selected</c:if>>남자</option> 
@@ -65,7 +65,7 @@
 			        <input type="text" id="memEmail" name="memEmail" placeholder="선택입력" aria-label="선택입력" class="int" maxlength="100" value="${member.memEmail}">
 			    </span>
 			</div> 
-			<div class="input_area">
+			<div class="input_area"> 
 			    <h3 class="join_title">
 			        <label for="memPhone">휴대전화</label>
 			    </h3>

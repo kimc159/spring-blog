@@ -44,7 +44,7 @@
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
+			<artifactId>aspectjweaver</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>	
 		
@@ -179,6 +179,42 @@
 		    <artifactId>javax.servlet-api</artifactId>
 		    <version>3.1.0</version>
 		    <scope>provided</scope>
+		</dependency>
+		<!-- AspectJ Weaver -->
+
+		<dependency>
+		    <groupId>org.aspectj</groupId> 
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>${org.aspectj-version}</version>
+		</dependency>
+		
+		<!-- MultipartHttpServletRequset --> 
+		<dependency> 
+			<groupId>commons-io</groupId> 
+			<artifactId>commons-io</artifactId> 
+			<version>2.0.1</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>commons-fileupload</groupId> 
+			<artifactId>commons-fileupload</artifactId> 
+			<version>1.2.2</version> 
+		</dependency>
+		<dependency>
+			<groupId>com.navercorp.lucy</groupId>
+			<artifactId>lucy-xss-servlet</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<!-- 웹 소켓 설정 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		<!-- JSONObject 사용하기 -->
+		<dependency> 
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
 		</dependency>
 	</dependencies>
     <build>

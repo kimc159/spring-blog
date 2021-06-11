@@ -1,3 +1,4 @@
+
 @CHARSET "UTF-8";
 
 button{outline:none;}
@@ -66,10 +67,46 @@ textarea{display:block; width:100%; height:100px; line-height:23px;}
 .boardInputArea label{display:inline-block; height: 40px; line-height: 40px;}
 
 /* 회원가입 */
-.formArea{margin:50px auto; width:1000px; padding:20px;}
+.formArea{margin:50px auto; width:1300px; padding:20px;}
 .formArea input{margin-bottom:10px;}
 .formArea h2{margin-bottom: 30px; text-align:center;}
 .formArea .btn_check{display:inline-block; vertical-align:top; margin-left:10px; background:#4588d7; border: 0 none; padding: 0 20px; height:40px; line-height:40px; color:#fff;}
+
+/* 채팅 UI */
+.chat_room{padding:50px 20px;}
+.chat_room .to_user{text-align:center; color:#111;} 
+.chat_room .chatBox{display: block; margin: 50px auto 0; width: 1000px; font-size: 13px; border: 1px solid #3d3d3e;}
+.chat_room .chat-content{overflow: auto; height: 500px; padding: 20px;}
+.chat_room .chatBox .card{border-radius: 4px;}
+.chat_room .chatBox .card-header{background: #683db8;}
+.chat_room .header-title{height: 50px;}
+.chat_room .card-header-title i{font-size: 10px; color: #32e4cd; margin-right: 6px;}
+.chat_room .card-header .card-header-title{color: #FFF;}
+.chat_room .chat-content small{margin: 0;}
+.chat_room .chat-content p{background: #ecf1f8; padding: 10px; border-radius: 8px; margin-bottom: 0;}
+.chat_room .card-footer{font-size:0; border-top: 1px solid #dbdbdb;}
+.chat_room .card-footer .chat-textarea{display:inline-block; vertical-align:top; width: calc(100% - 100px); font-size: 14px; padding: 8px; height: 40px; border: none; overflow: auto; outline: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; resize: none;}
+.chat_room .card-footer button{ display:inline-block;  vertical-align:top; width:100px;  height:40px;  line-height:40px;  background-color: #f2f2f2;  text-align:center; font-size:14px;}
+.chat_room .chat-message-group:after{content:""; display:block; clear:both;}
+.chat_room .chat-message-group .chat-messages{float: left; width: 100%; margin-bottom: 20px;}
+.chat_room .chat-message-group .message{float: left; padding: 10px; background: #ecf1f8; font-size: 13px; border-radius: 5px; margin-bottom: 3px;}
+.chat_room .chat-messages .from{float: left; display: block; width: 100%; text-align: left; font-size: 11px;}
+.chat_room .chat-thumb img{  border-radius: 40px;}
+.chat_room .chat-message-group.writer-user .chat-messages{ float: right; width: 100%;}
+.chat_room .chat-message-group.writer-user .chat-messages .message{float: right; background: #683db8; color: #FFF;}
+.chat_room .chat-message-group.writer-user .chat-messages .from{ float: left; display: block; width: 100%; text-align: right;}
+.chat_room .card-header-title img{border-radius: 40px;}
+	
+.user_find_area{margin: 50px auto; padding: 50px 20px; display: block; width: 700px; border: 1px solid #111; box-sizing: border-box;}
+.user_find_area > h2{padding: 0 0 30px; text-align:center;}
+.user_find_area .find_search{font-size: 0;} 
+.user_find_area .find_search input[type=text]{display: inline-block; vertical-align: top; width: calc(100% - 90px); height: 40px; line-height: 40px; padding: 0 10px; border: 1px solid #ddd; box-sizing: border-box; font-size: 14px;}
+.user_find_area .find_search button{display: inline-block; vertical-align: top; width: 90px; height: 40px; line-height: 40px; text-align: center; background: #ddd; border: 0; font-size: 14px; text-align: center; color: #111;}
+.user_find_area .find_list{margin-top: 50px; border-top: 1px solid #ddd;}
+.user_find_area .find_list .list{}
+.user_find_area .find_list .list > li{display:block; position:relative; height: 40px; line-height: 40px; text-align: left; padding: 0 10px; border-bottom: 1px solid #ddd; padding:0; font-size: 14px; color: #111;}
+.user_find_area .find_list .list > li button{position:absolute; right:0; top:0; width:90px; height: 40px; line-height: 40px; text-align:center; background:dodgerblue; color:#fff;} 
+.user_find_area .find_list .list > li:hover{background:#dddddd4d;} 
 
 /* 공통 팝업 */
 #pop{z-index:100; display:none; position: fixed; left: 0; right: 0; top: 0; bottom: 0; background:rgba(0,0,0,0.3);}

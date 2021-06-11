@@ -37,7 +37,7 @@
 				<tr>
 					<td>${list.seq}</td>
 					<td><a href="boardDetail?seq=${list.seq}&writer=${list.writer}">
-						<c:forEach begin="1" end="${list.board_level}">
+						<c:forEach begin="1" end="${list.boardLevel}">
 							->
 						</c:forEach>
 						

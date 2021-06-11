@@ -11,38 +11,48 @@
 <head> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>블로그 사이트</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/global.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/global.css"> 
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"> 
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-2.2.4.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/main.js"></script> 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
-	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/main.js?js"></script> 
+	<!-- sockJS -->
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>  
+	<c:set var="currentUser" value="${login.memId}" /> 
 </head>
-<body>
-	<div id="header" class="header">
+<body> 
+	<div id="header" class="header"> 
 	    <div class="headerInner">
 	        <h1 class="logo">
-	            <a href="/board/list">블로그</a>
+	            <a href="/board/list" data-trans="블로그">블로그</a>
 	        </h1>
 	        <ul class="rightMenu">
 				<c:if test="${empty login.memId}">
 		            <li>
-		                <a href="/login">로그인</a>
+		                <a href="/login" data-trans="로그인">로그인</a>
 		            </li>
 		            <li>
-		                <a href="/join">회원가입</a>
+		                <a href="/join" data-trans="회원가입">회원가입</a>
 		            </li>
 	            </c:if>
 				<c:if test="${not empty login.memId}">
-		            <li>
-		                <span><em>${login.memId}</em> 님</span>
+		            <li> 
+		                <span><em data-trans="${login.memId}">${login.memId}</em> <em data-trans="님">님</em></span>
 		            </li>
 		            <li>
-		                <a href="/join/modify">정보수정</a>
+		                <a href="/chat/chatUserFind">친구찾기</a> 
 		            </li>
 		            <li>
-		                <a href="/logout">로그아웃</a>
+		                <a href="/board/list" data-trans="일반게시판">일반게시판</a>
+		            </li>
+		            <li>
+		                <a href="/boardFile/list" data-trans="파일게시판">파일게시판</a>
+		            </li>
+		            <li>
+		                <a href="/join/modify" data-trans="정보수정">정보수정</a>
+		            </li>
+		            <li>
+		                <a href="/logout" data-trans="로그아웃">로그아웃</a>
 		            </li>
 	            </c:if>
 	        </ul>

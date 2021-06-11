@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="com.project.blog.main.mapper.MainMapper">
+<mapper namespace="com.project.chat.main.mapper.MainMapper">
 		
-	<insert id="join" parameterType="com.project.blog.member.MemberVO" 
+	<insert id="join" parameterType="com.project.chat.member.MemberVO" 
 	>
 		insert into 
 			member (
@@ -13,8 +13,6 @@
 				memGender,
 				memEmail,
 				memPhone,
-				authKey,
-				authStatus,
 				salt
 			)
 		values ( 
@@ -25,13 +23,11 @@
 			#{memGender}, 
 			#{memEmail},
 			#{memPhone},
-			0,
-			0,
 			#{salt}
 		)
 	</insert>
 	
-	<update id="modify" parameterType="com.project.blog.member.MemberVO">
+	<update id="modify" parameterType="com.project.chat.member.MemberVO">
 		update
 			member
 		set
@@ -52,7 +48,7 @@
 		update member set AUTHKEY = #{authKey} where memEmail = #{email}
 	</update>
 	 
-	<select id="login" resultType="com.project.blog.login.LoginVO">
+	<select id="login" resultType="com.project.chat.login.LoginVO">
 		select
 			*
 		from
@@ -110,7 +106,7 @@
 		where
 			memId = #{memId}
 	</select>
-	<select id="selectMember" resultType="com.project.blog.member.MemberVO">
+	<select id="selectMember" resultType="com.project.chat.member.MemberVO">
 		select
 			*
 		from
@@ -118,5 +114,118 @@
 		where
 			memId = #{memId}
 	</select>
-	
+	<update id="joinConfirm" parameterType="hashMap">
+		update 
+			member
+		set
+			authStatus = 1
+		where
+			memEmail = #{email}
+		and
+			authKey = #{authKey}
+	</update>
+	<select id="memberAuthStatus" parameterType="com.project.chat.login.LoginVO" resultType="int">
+		select
+			authStatus
+		from
+			member
+		where
+			memId = #{memId}
+	</select>
+	<select id="selectRoom" parameterType="com.project.chat.RoomVO" resultType="com.project.chat.RoomVO"> 
+		select 
+			* 
+		from
+			chat_room
+		where
+			(
+				from_id = #{from_id}
+				and
+				to_id = #{to_id}
+			)
+		OR
+			(
+				from_id = #{to_id}
+				and
+				to_id = #{from_id}
+			)
+			
+	</select>
+	<insert id="insertRoom" parameterType="com.project.chat.RoomVO">
+		<selectKey keyProperty="room_id" resultType="int" order="BEFORE">
+			select 
+				room_id_sequence.nextval 
+			from
+				DUAL 
+		</selectKey>
+		insert into 
+			chat_room (
+				  room_id
+				, to_id
+				, from_id
+			)
+		values	(
+				  #{room_id}
+				, #{to_id}
+				, #{from_id}
+			)
+	</insert> 
+	<select id="chatList" parameterType="com.project.chat.RoomVO" resultType="com.project.chat.ChatMessageVO">
+		select
+			*
+		from
+			chat_message
+		where
+			(
+				from_id = #{from_id}
+				and
+				to_id = #{to_id}
+				and
+				room_id = #{room_id}
+			)
+		OR
+			(
+				from_id = #{to_id}
+				and
+				to_id = #{from_id}
+				and
+				room_id = #{room_id}
+			)
+		order by time
+	</select>
+	<insert id="insertMessage" parameterType="hashMap">
+		<selectKey keyProperty="message_id" resultType="int" order="BEFORE">
+			select 
+				message_id_sequence.nextval 
+			from
+				DUAL
+		</selectKey>
+		insert into 
+			chat_message (
+				  message_id
+				, message
+				, time
+				, room_id
+				, to_id
+				, from_id
+			)
+		values	(
+				  #{message_id} 
+				, #{message}
+				, to_date(#{time}, 'YYYY-MM-DD HH24:MI:SS')  
+				, #{room_id}
+				, #{to_id} 
+				, #{from_id}
+			)
+	</insert> 
+	<select id="roomList" parameterType="String" resultType="com.project.chat.RoomVO"> 
+		select
+			*
+		from
+			chat_room
+		where
+			from_id = #{user_id}
+		OR
+			to_id = #{user_id}
+	</select>
 </mapper>
