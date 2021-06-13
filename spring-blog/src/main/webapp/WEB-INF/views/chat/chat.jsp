@@ -98,7 +98,7 @@
 		        html +='    </div>'; 
 		        html +='</div>';
 				$("#chatbox-area").find(".content").append(html); 
-				$("#chatbox-area").find(".card-content").scrollTop($("#chatbox-area").find($(".content").innerHeight()); 
+				$("#chatbox-area").find(".card-content").scrollTop($("#chatbox-area").find($(".content").innerHeight())); 
 				
 			} else {
 				return;

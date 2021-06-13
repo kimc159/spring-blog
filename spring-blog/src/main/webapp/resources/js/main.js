@@ -70,7 +70,7 @@ function login() {
             dataType : 'json',
             success : function(rs){
                 if(rs.result === -2) {
-                	alert("이메일 인증이 안료되지 않았습니다.");
+                	alert("이메일 인증이 완료되지 않았습니다.");
                 } else if(rs.result === 1) {
                 	alert("로그인이 성공하엿습니다."); 
                 	location.href="/board/list";

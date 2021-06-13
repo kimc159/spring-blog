@@ -65,21 +65,7 @@ public class MainController{
 
 		Map<String, Object> rs = new HashMap<String, Object>();
 		
-		if (result == 1) {
-			int authStatus = service.memberAuthStatus(loginVO);
-			
-			if(authStatus == 1) {// 이메일 인증 받았을 경우
-				rs.put("result", 1);
-			} else { // 이메일 인증 안받았을 경우
-				rs.put("result", -2);
-			}
-			
-		} else if (result == 0) {
-			rs.put("result", 0);
-		} else {
-			rs.put("result", -1);
-		}
-
+		rs.put("result", result); 
 		return rs;
 	}
 	
@@ -93,7 +79,7 @@ public class MainController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		 
 	}
 	
 	@RequestMapping(value="/join/joinOk", method=RequestMethod.POST)
@@ -104,12 +90,11 @@ public class MainController{
 			 model.addAttribute("msg", "");
 			 return "common/redirect";
 		}
-		
-		// ������ ���� ����
+		// SHA256 암호화
 		String salt = SHA256Util.generateSalt();
 		member.setSalt(salt);
 		
-		// SHA256 ��й�ȣ ��ȣȭ
+		// SHA256 암호화
 		String password = member.getMemPassword();
 		password = SHA256Util.getEncrypt(password, salt);
 		member.setMemPassword(password);
@@ -118,7 +103,7 @@ public class MainController{
 		int result = service.join(member);
 
 		if(result == 1) {
-			 // ���� Ű ���� �� �̸��� �߼�
+			 // 회원가입 완료
 			 
 			String authKey = mss.sendAuthMail(member.getMemEmail());
 			member.setAuthKey(authKey);
@@ -129,16 +114,17 @@ public class MainController{
 			 
 			 service.updateAuthKey(map);
 			 model.addAttribute("url", "/login");
-			 model.addAttribute("msg", "ȸ�������� �Ϸ�Ǿ����ϴ�.");
+			 model.addAttribute("msg", "회원가입이 완료되었습니다.");
 			
 			 return "common/redirect"; 
 		} else {
 			 model.addAttribute("url", "/join");
-			 model.addAttribute("msg", "�����ͺ��̽� ������ �߻��߽��ϴ�.");
+			 model.addAttribute("msg", "회원가입에 실패하였습니다.");
 			 return "common/redirect";
 		} 
 	 }
 	 
+     // 이메일 인증
 	 @RequestMapping(value="/join/confirm")
 	 public String joinConfirm(Model model, @RequestParam("email") String email, @RequestParam("authKey") String authKey) {
 		 Map<String, Object> map = new HashMap<String, Object>();
@@ -149,10 +135,10 @@ public class MainController{
 
 		if(result == 1) {
 			model.addAttribute("url", "/login");
-			model.addAttribute("msg", "�̸��� ������ �Ϸ�Ǿ����ϴ�.");	
+			model.addAttribute("msg", "이메일 인증이 완료되었습니다.");	
 		} else {
 			model.addAttribute("url", "/login");
-			model.addAttribute("msg", "�̸��� ������ ������ �߻��߽��ϴ�.");
+			model.addAttribute("msg", "이메일 인증에 실패하였습니다.");
 		}
 		 return "common/redirect";
 	 }
@@ -162,30 +148,28 @@ public class MainController{
 		
 		 if(member.getMemPassword() == null || member.getMemPassword().equals("")) {
 			 model.addAttribute("url", "/join/modify");
-			 model.addAttribute("msg", "��й�ȣ�� �Է����ּ���.");
+			 model.addAttribute("msg", "비밀번호를 입력해주세요.");
 			 return "common/redirect";
 		 }
 		 
-		// ������ ���� ����
+		
 		String salt = SHA256Util.generateSalt();
 		member.setSalt(salt);
 		
-		// SHA256 ��й�ȣ ��ȣȭ
 		String password = member.getMemPassword();
 		password = SHA256Util.getEncrypt(password, salt);
 		member.setMemPassword(password);
 
-		 // ����
 		int result = service.modify(member);
 		
 		if(result == 1) {
 			 model.addAttribute("url", "/board/list");
-			 model.addAttribute("msg", "���������� �Ϸ�Ǿ����ϴ�.");
+			 model.addAttribute("msg", "수정이 완료되었습니다.");
 			
 			 return "common/redirect"; 
 		} else {
 			 model.addAttribute("url", "/join/modify");
-			 model.addAttribute("msg", "�����ͺ��̽� ������ �߻��߽��ϴ�.");
+			 model.addAttribute("msg", "수정에 실패하였습니다.");
 			 return "common/redirect";
 		} 
 		

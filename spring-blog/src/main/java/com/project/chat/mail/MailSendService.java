@@ -17,13 +17,13 @@ public class MailSendService {
     
     private int size;
     
-    //����Ű ����
+    //인증키 생성
     private String getKey(int size) {
         this.size = size;
         return getAuthCode();
     }
 
-    //�����ڵ� ���� �߻�
+    //인증코드 난수 발생
     private String getAuthCode() {
     	 
     	Random ran = new Random();
@@ -38,23 +38,23 @@ public class MailSendService {
     	return buffer.toString();
     	
     }
-    //�������� ������
+    //인증메일 보내기
     public String sendAuthMail(String email) {
-        //6�ڸ� ���� ������ȣ ����
+        //6자리 난수
         String authKey = getKey(6);
 
-        //�������� ������
+        //인증메일 보내기
         try {
             MailUtils sendMail = new MailUtils(mailSender);
-            sendMail.setSubject("ȸ������ �̸��� ����");
-            sendMail.setText(new StringBuffer().append("<h1>[�̸��� ����]</h1>")
-            .append("<p>�Ʒ� ��ũ�� Ŭ���Ͻø� �̸��� ������ �Ϸ�˴ϴ�.</p>")
-            .append("<a href='http://192.168.0.25:8090/join/confirm?email=")
+            sendMail.setSubject("회원가입 이메일 인증");
+            sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
+            .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
+            .append("<a href='http://localhost:8090/join/confirm?email=")
             .append(email)
             .append("&authKey=") 
             .append(authKey)
-            .append("' target='_blenk'>�̸��� ���� Ȯ��</a>")
-            .toString());
+            .append("' target='_blenk'>이메일 인증 확인</a>")
+            .toString()); 
             sendMail.setFrom("ljykimc159@gmail.com", "관리자");
             sendMail.setTo(email);
             sendMail.send();

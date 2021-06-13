@@ -20,7 +20,7 @@ public class ChatMessageVO {
 		return message;
 	}
 	public void setMessage(String message) {
-		this.message = message;
+		this.message = message; 
 	}
 	public Date getTime() {
 		return time;

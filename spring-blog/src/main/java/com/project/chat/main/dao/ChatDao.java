@@ -28,11 +28,15 @@ public class ChatDao implements ChatDaoImpl {
 		// TODO Auto-generated method stub
 		return session.insert(namespace + ".insertRoom", roomVO);
 	}
-
 	@Override
 	public List<ChatMessageVO> chatList(RoomVO roomVO) {
 		// TODO Auto-generated method stub
 		return session.selectList(namespace + ".chatList", roomVO);
+	}
+	@Override
+	public ChatMessageVO lastChatList(RoomVO roomVO) {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace + ".lastChatList", roomVO);
 	}
 	@Override
 	public int insertMessage(Map<String, Object> map) {
@@ -40,7 +44,7 @@ public class ChatDao implements ChatDaoImpl {
 		return session.insert(namespace + ".insertMessage", map);
 	}
 	@Override
-	public List<RoomVO> roomList(String user_id) {
-		return session.selectList(namespace + ".roomList", user_id);
+	public List<RoomVO> chatRoomList(String user_id) {
+		return session.selectList(namespace + ".chatRoomList", user_id);
 	}
 }

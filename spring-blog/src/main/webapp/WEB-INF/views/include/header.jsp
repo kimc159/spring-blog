@@ -23,6 +23,16 @@
 <body> 
 	<div id="header" class="header"> 
 	    <div class="headerInner">
+	    	<ul class="leftMenu">
+				<c:if test="${not empty login.memId}">
+		            <li>
+		                <a href="/chat/chatUserFind">친구찾기</a> 
+		            </li>
+		            <li>
+		                <a href="/chat/chatRoomList">채팅</a> 
+		            </li>
+	            </c:if>
+	    	</ul>
 	        <h1 class="logo">
 	            <a href="/board/list" data-trans="블로그">블로그</a>
 	        </h1>
@@ -35,12 +45,9 @@
 		                <a href="/join" data-trans="회원가입">회원가입</a>
 		            </li>
 	            </c:if>
-				<c:if test="${not empty login.memId}">
+				<c:if test="${not empty login.memId}"> 
 		            <li> 
 		                <span><em data-trans="${login.memId}">${login.memId}</em> <em data-trans="님">님</em></span>
-		            </li>
-		            <li>
-		                <a href="/chat/chatUserFind">친구찾기</a> 
 		            </li>
 		            <li>
 		                <a href="/board/list" data-trans="일반게시판">일반게시판</a>

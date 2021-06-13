@@ -3,25 +3,30 @@
 <%@ include file="../include/header.jsp" %>
 	<div class="user_find_area">
 		<h2>채팅</h2>
-		<div class="find_search">
-			<input type="text" id="findUserName">
-			<button type="button" onClick="">찾기</button>
-		</div>
-		<div class="find_list">
-			<ul class="list" id="findList">
-				<c:forEach items="${roomList}" var="list">
+		<div class="find_list"> 
+			<ul class="list type_chat" id="findList">
+				<c:forEach items="${chatRoomList}" var="list"> 
 					<li>
 						<c:choose>
 							<c:when test="${currentUser eq list.to_id}">
-								<span>${list.from_id}</span>
-								<button type="button" onclick="location.href='/chat?from_id=${list.to_id}&to_id=${list.from_id}'">대화하기</button>
+								<div class="img_area">
+									<img src="/resources/images/profile_default.jpg" />
+								</div>
+								<a class="text_area" href="/chat?from_id=${list.to_id}&to_id=${list.from_id}">
+									<span class="chat_user">${list.from_id}</span>
+									<span class="last_text">마지막 텍스트</span>
+								</a>
 							</c:when> 
 							<c:otherwise>
-								<span>${list.to_id}</span>
-								<button type="button" onclick="location.href='/chat?from_id=${list.from_id}&to_id=${list.to_id}'">대화하기</button>
+								<div class="img_area">
+									<img src="/resources/images/profile_default.jpg" />
+								</div>
+								<a class="text_area" href="/chat?from_id=${list.from_id}&to_id=${list.to_id}">
+									<span class="chat_user">${list.to_id}</span>
+									<span class="last_text">마지막 텍스트</span> 
+								</a>
 							</c:otherwise>
 						</c:choose>
-						
 					</li>
 				</c:forEach>
 			</ul> 

@@ -11,5 +11,6 @@ public interface ChatServiceImpl {
 	int insertRoom(RoomVO roomVO);
 	List<ChatMessageVO> chatList(RoomVO roomVO);
 	int insertMessage(Map<String, Object> map);
-	List<RoomVO> roomList(String user_id);
+	List<RoomVO> chatRoomList(String user_id);
+	ChatMessageVO lastChatList(RoomVO roomVO);
 }

@@ -42,24 +42,31 @@ public class MemberService implements MemberServiceImpl{
 			// 로그인 성공, 비밀번호 일치 여부
 			if(loginVO.getMemPassword().equals(mem.getMemPassword())) {
 				
-				// 아이디 중복 체크
-				SessionConfig.getSessionidCheck("user_id", loginVO.getMemId().toString());
-
-				Cookie cookie = new Cookie("rememberID", loginVO.getMemId());
-				if(loginVO.getRememberId()) {
-					cookie.setMaxAge(60*60*24*30);
-				} else {
-					cookie.setMaxAge(0);
-				} 
-				cookie.setPath("/");
-				response.addCookie(cookie); 
+				int authStatus = memberAuthStatus(loginVO); 
 				
-				// 사용자 세션 설정				
-				session.setAttribute("user_id", loginVO.getMemId());
-				session.setAttribute("login", loginVO);
-				session.setMaxInactiveInterval(30*60);  
-				  
-				return 1; 
+				if(authStatus == 1) {// 이메일 인증 받았을 경우
+
+					// 아이디 중복 체크
+					SessionConfig.getSessionidCheck("user_id", loginVO.getMemId().toString());
+
+					Cookie cookie = new Cookie("rememberID", loginVO.getMemId());
+					if(loginVO.getRememberId()) {
+						cookie.setMaxAge(60*60*24*30);
+					} else {
+						cookie.setMaxAge(0);
+					} 
+					cookie.setPath("/");
+					response.addCookie(cookie); 
+					
+					// 사용자 세션 설정				
+					session.setAttribute("user_id", loginVO.getMemId());
+					session.setAttribute("login", loginVO);
+					session.setMaxInactiveInterval(30*60); 
+					
+					return 1;
+				} else { // 이메일 인증 안받았을 경우
+					return -2;
+				}
 			} else { 
 				// 비밀번호 일치하지 않을 경우
 				return 0;

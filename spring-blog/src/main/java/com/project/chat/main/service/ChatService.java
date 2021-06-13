@@ -34,13 +34,18 @@ public class ChatService implements ChatServiceImpl {
 		return chatDao.chatList(roomVO);
 	}
 	@Override
+	public ChatMessageVO lastChatList(RoomVO roomVO) {
+		// TODO Auto-generated method stub
+		return chatDao.lastChatList(roomVO);
+	}
+	@Override
 	public int insertMessage(Map<String, Object> map) {
 		
 		// TODO Auto-generated method stub
 		return chatDao.insertMessage(map);
 	}
 	@Override
-	public List<RoomVO> roomList(String user_id) {
-		return chatDao.roomList(user_id);
+	public List<RoomVO> chatRoomList(String user_id) {
+		return chatDao.chatRoomList(user_id);
 	}
 }
