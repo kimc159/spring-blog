@@ -29,6 +29,9 @@
 		                <a href="/chat/chatUserFind">친구찾기</a> 
 		            </li>
 		            <li>
+		                <a href="/chat/chatFriend">친구</a> 
+		            </li> 
+		            <li>
 		                <a href="/chat/chatRoomList">채팅</a> 
 		            </li>
 	            </c:if>

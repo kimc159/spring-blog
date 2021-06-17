@@ -23,13 +23,15 @@ public class MemberService implements MemberServiceImpl{
 	@Autowired
 	private MemberDao memberDao;
 	
+	@Override
 	public int join(MemberVO member) {
 		return memberDao.join(member);
 	}
+	@Override
 	public int updateAuthKey(Map<String, String> map) {
 		return memberDao.updateAuthKey(map);
 	}
-	
+	@Override
 	public int login(LoginVO loginVO, HttpServletResponse response, HttpSession session) {
 		
 		LoginVO mem = memberDao.login(loginVO.getMemId());
@@ -78,12 +80,15 @@ public class MemberService implements MemberServiceImpl{
 		
 		
 	}
+	@Override
 	public String getSaltById(String memId) {
 		return memberDao.getSaltById(memId);
 	}
+	@Override
 	public String findId(String email) {
 		return memberDao.findId(email);
 	}
+	@Override
 	public String findPassword(String memId, String memEmail) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memId", memId);
@@ -117,22 +122,26 @@ public class MemberService implements MemberServiceImpl{
 		}
 		
 	}
-	
+	@Override
 	public int idCheck(String id) {
 		return memberDao.idCheck(id);
 	}
+	@Override
 	public int modify(MemberVO member) {
 		// TODO Auto-generated method stub
 		return memberDao.modify(member);
 	}
+	@Override
 	public MemberVO selectMember(String memberId) {
 		// TODO Auto-generated method stub
 		return memberDao.selectMember(memberId);
 	}
+	@Override
 	public int joinConfirm(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return memberDao.joinConfirm(map);
 	}
+	@Override
 	public int memberAuthStatus(LoginVO loginVO) {
 		// TODO Auto-generated method stub
 		return memberDao.memberAuthStatus(loginVO);

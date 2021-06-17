@@ -28,9 +28,10 @@ import com.project.chat.util.ScriptUtils;
 public class BoardController {
 
 	public static final String FILE_SERVER_PATH = "C:\\mp\\file"; 
+	
 	@Autowired
 	private BoardService service;
-
+	
 	@RequestMapping(value = "board/list") 
 	public String list(Model model, @ModelAttribute("scri") SearchCriteria scri) {
 

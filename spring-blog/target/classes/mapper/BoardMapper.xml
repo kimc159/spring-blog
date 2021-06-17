@@ -139,20 +139,25 @@
 	</update>
 	<!-- board_hit 조회수 증가 ()-->
 	<insert id="boardHit" parameterType="hashMap">
+		<selectKey keyProperty="hit_num" resultType="int" order="BEFORE">
+			select board_hit_sq.nextVal from dual
+		</selectKey>
 		insert into
 			board_hit (
 				hit_seq,
 				hit_writer,
-				hit_replyer
+				hit_replyer,
+				hit_num 
 			)
 		values (
 			#{hit_seq},
 			#{hit_writer},
-			#{hit_replyer}
+			#{hit_replyer},
+			#{hit_num} 
 		)
 	</insert>
 	<select id="selectHitSeq" parameterType="hashMap" resultType="int">
-		select
+		select 
 			count(*)
 		from
 			board_hit

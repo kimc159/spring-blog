@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.chat.ChatMessageVO;
+import com.project.chat.FriendVO;
 import com.project.chat.RoomVO;
 import com.project.chat.main.dao.ChatDao;
  
@@ -27,7 +28,6 @@ public class ChatService implements ChatServiceImpl {
 		// TODO Auto-generated method stub
 		return chatDao.insertRoom(roomVO);
 	}
-
 	@Override
 	public List<ChatMessageVO> chatList(RoomVO roomVO) {
 		// TODO Auto-generated method stub
@@ -47,5 +47,17 @@ public class ChatService implements ChatServiceImpl {
 	@Override
 	public List<RoomVO> chatRoomList(String user_id) {
 		return chatDao.chatRoomList(user_id);
+	}
+	@Override
+	public int userFriendAdd(Map<String, String> map) {
+		return chatDao.userFriendAdd(map);
+	}
+	@Override
+	public int userFriendCount(Map<String, String> map) {
+		return chatDao.userFriendCount(map);
+	}
+	@Override
+	public List<FriendVO> userFriendSelect(String user_id) {
+		return chatDao.userFriendSelect(user_id);
 	}
 }

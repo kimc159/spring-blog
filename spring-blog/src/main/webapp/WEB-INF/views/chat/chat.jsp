@@ -41,7 +41,7 @@
 	
 	<script>
 		$(function() {
-			$("#chatbox-area").find(".card-content").scrollTop($("body").height()); 
+			$("#chatbox-area").find(".card-content").scrollTop($(".content").innerHeight());  
 		});
 		var from_id = '<c:out value="${currentUser}" />';
 		var to_id = '<c:out value="${room.to_id}" />';
@@ -97,8 +97,8 @@
 		        html +='        <div class="from">'+data[2]+'</div>';  
 		        html +='    </div>'; 
 		        html +='</div>';
-				$("#chatbox-area").find(".content").append(html); 
-				$("#chatbox-area").find(".card-content").scrollTop($("#chatbox-area").find($(".content").innerHeight())); 
+				$("#chatbox-area").find(".content").append(html);  
+				$("#chatbox-area").find(".card-content").scrollTop($(".content").innerHeight());  
 				
 			} else {
 				return;

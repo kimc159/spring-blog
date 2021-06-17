@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.chat.ChatMessageVO;
+import com.project.chat.FriendVO;
 import com.project.chat.RoomVO;
 
 @Repository
@@ -47,4 +48,17 @@ public class ChatDao implements ChatDaoImpl {
 	public List<RoomVO> chatRoomList(String user_id) {
 		return session.selectList(namespace + ".chatRoomList", user_id);
 	}
+	@Override
+	public int userFriendAdd(Map<String, String> map) {
+		return session.insert(namespace + ".userFriendAdd", map);
+	}
+	@Override
+	public int userFriendCount(Map<String, String> map) {
+		return session.selectOne(namespace + ".userFriendCount", map);
+	}
+	@Override
+	public List<FriendVO> userFriendSelect(String user_id) { 
+		return session.selectList(namespace + ".userFriendSelect", user_id);
+	}
+	
 }
