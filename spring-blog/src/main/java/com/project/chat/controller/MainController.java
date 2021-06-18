@@ -31,9 +31,6 @@ public class MainController{
 	
 	@Autowired
 	private MailSendService mss;
-
-	@Autowired
-	private PapagoTranslate papago; 
 	
 	@RequestMapping(value = "/redirect")
 	public String redirect() {

@@ -100,7 +100,7 @@ public class BoardController {
 		// �Խñ� �ۼ��ڰ� �ƴϸ� ���� �Ұ�
 		if (!session.getAttribute("user_id").toString().equals(board_writer)) {
 			try {
-				ScriptUtils.alertAndMovePage(response, "���� ������ �����ϴ�.", "/board/list");
+				ScriptUtils.alertAndMovePage(response, "접근할 수 없습니다.", "/board/list");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -127,14 +127,14 @@ public class BoardController {
 		// �Խñ� �ۼ��ڰ� �ƴϸ� ���� �Ұ�
 		if (!session.getAttribute("user_id").toString().equals(board_writer)) {
 			try {
-				ScriptUtils.alertAndMovePage(response, "���� ������ �����ϴ�.", "/board/list");
+				ScriptUtils.alertAndMovePage(response, "접근할 수 없습니다.", "/board/list");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		service.deleteBoard(seq);
 
-		model.addAttribute("msg", "������ �Ϸ�Ǿ����ϴ�.");
+		model.addAttribute("msg", "삭제가 완료되었습니다.");
 		model.addAttribute("url", "/board/list");
 
 		return "common/redirect";
