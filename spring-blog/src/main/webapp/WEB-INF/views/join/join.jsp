@@ -3,8 +3,7 @@
 <div class="formArea">
 
 	<h2>MEMBER JOIN</h2> 
-	develop1 commit - test
-	develop2 commit
+	sourcetree 충돌 해결
 	<form action="join/joinOk" method="post">
 		<div class="join_content">
 			<div class="input_area">
