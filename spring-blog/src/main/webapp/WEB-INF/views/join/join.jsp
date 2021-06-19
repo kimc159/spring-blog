@@ -4,7 +4,7 @@
 
 	<h2>MEMBER JOIN</h2> 
 	develop1 commit
-	develop2 commit
+	develop2 commit - join
 	<form action="join/joinOk" method="post">
 		<div class="join_content">
 			<div class="input_area">
