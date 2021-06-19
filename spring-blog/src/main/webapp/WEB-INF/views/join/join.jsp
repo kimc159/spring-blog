@@ -3,9 +3,7 @@
 <div class="formArea">
 
 	<h2>MEMBER JOIN</h2> 
-	코드 다 지움
-	develop1 commit - test
-	develop2 commit
+	수정 또함 ㅎㅎ
 	<form action="join/joinOk" method="post">
 		<div class="join_content">
 			<div class="input_area">
