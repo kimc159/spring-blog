@@ -4,6 +4,7 @@
 
 	<h2>MEMBER JOIN</h2> 
 	수정 또함 ㅎㅎ
+	sourcetree 충돌 해결 - 다지움 ㅎㅎㅎ
 	<form action="join/joinOk" method="post">
 		<div class="join_content">
 			<div class="input_area">
