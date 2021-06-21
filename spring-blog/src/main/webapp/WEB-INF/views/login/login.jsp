@@ -4,6 +4,7 @@
 	<c:if test="${not empty cookie.rememberID}">
 		<c:set var="checked" value="checked" />
 	</c:if>
+	feature login edit
 	<div id="loginWrap">
 	    <!-- login -->
 		<div class="login">
