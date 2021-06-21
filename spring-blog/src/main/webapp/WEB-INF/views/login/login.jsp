@@ -4,7 +4,8 @@
 	<c:if test="${not empty cookie.rememberID}">
 		<c:set var="checked" value="checked" />
 	</c:if>
-	develop branch 첫번째 수정
+	develop branch 첫번째 수정 feature login edit 병합
+	
 	<div id="loginWrap">
 	    <!-- login -->
 		<div class="login">
