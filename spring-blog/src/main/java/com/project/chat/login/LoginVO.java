@@ -1,7 +1,11 @@
 package com.project.chat.login;
 
+import javax.validation.constraints.NotEmpty;
+
 public class LoginVO {
+	@NotEmpty
 	String memId;
+	@NotEmpty
 	String memPassword;
 	String memName;
 	String memEmail;

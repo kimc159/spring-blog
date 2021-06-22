@@ -76,6 +76,8 @@ function login() {
                 	location.href="/board/list";
                 } else if(rs.result === 0){
                 	alert("비밀번호가 일치하지 않습니다.");
+                } else if(rs.result === -3){
+                	alert("아이디 또는 패스워드를 입력해주세요.");
                 } else {
                 	alert("존재하지 않는 아이디 입니다.");
                 }

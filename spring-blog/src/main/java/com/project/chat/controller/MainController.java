@@ -2,20 +2,23 @@ package com.project.chat.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.chat.board.PapagoTranslate;
 import com.project.chat.login.LoginVO;
 import com.project.chat.mail.MailSendService;
 import com.project.chat.main.service.MemberService;
@@ -56,11 +59,20 @@ public class MainController{
 
 	@ResponseBody
 	@RequestMapping(value = "/login/loginOk")
-	public Map<String, Object> loginOk(LoginVO loginVO, HttpServletResponse response, HttpSession session) {
+	public Map<String, Object> loginOk(@Valid LoginVO loginVO, BindingResult bindingResult,HttpServletResponse response, HttpSession session) {
+		int result;
 		
-		int result = service.login(loginVO, response, session);
+		if (bindingResult.hasErrors()) {
+	        List<ObjectError> errorList = bindingResult.getAllErrors();
+	        for (ObjectError error : errorList) {
+	            System.out.println(error.getDefaultMessage());
+	        }
+	        result = -3;
+	    } else {
+	    	result = service.login(loginVO, response, session); 
+	    }
 
-		Map<String, Object> rs = new HashMap<String, Object>();
+		Map<String, Object> rs = new HashMap<String, Object>(); 
 		
 		rs.put("result", result); 
 		return rs;
@@ -70,6 +82,7 @@ public class MainController{
 	public void logout(HttpServletResponse response, HttpSession session) {
 
 		session.invalidate();
+		
 		try {
 			ScriptUtils.alertAndMovePage(response, "로그아웃되었습니다.", "/login");
 		} catch (IOException e) {
@@ -81,7 +94,6 @@ public class MainController{
 	
 	@RequestMapping(value="/join/joinOk", method=RequestMethod.POST)
 	public  String joinOk(MemberVO member, HttpServletResponse response, Model model) throws IOException {
-
 		if(member.getMemPassword() == null || member.getMemPassword().equals("")) {
 			 model.addAttribute("url", "/join/modify");
 			 model.addAttribute("msg", "");
