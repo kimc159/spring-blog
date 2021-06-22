@@ -29,9 +29,13 @@ import com.project.chat.member.MemberVO;
 @Controller
 public class ChatController {
 
-	@Autowired
-	private MemberService memberService;
-
+	
+	private final MemberService memberService;
+	
+	public ChatController(MemberService memberService) {
+		this.memberService = memberService; 
+	}
+	
 	@Autowired
 	private ChatService chatService;
 
