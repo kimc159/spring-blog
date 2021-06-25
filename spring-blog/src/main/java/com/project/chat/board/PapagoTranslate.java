@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 @Service 
 public class PapagoTranslate {
 
-    public static final String clientId = "axkgfARxUGIpXUgjRWgH";//애플리케이션 클라이언트 아이디값";
-    public static final String clientSecret = "XlQWoMI79f";//애플리케이션 클라이언트 시크릿값";
+    public static final String clientId = "";//애플리케이션 클라이언트 아이디값";
+    public static final String clientSecret = "";//애플리케이션 클라이언트 시크릿값";
 
     public static final String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
     
