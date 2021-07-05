@@ -58,18 +58,25 @@ function login() {
 	var memPassword = $("#memPassword").val();
 	var rememberId = $("#rememberId").is(":checked");
 	
+	/*var data = {
+    	memId: memId,
+    	memPassword: memPassword,
+		rememberId: rememberId
+	};*/
+	 
 	$.ajax( 
         {
-			url:"./login/loginOk",
-            data : { 
-            	memId: memId,
-            	memPassword: memPassword,
+			url:"./login/loginOk",  
+            data : {
+		    	memId: memId, 
+		    	memPassword: memPassword,
 				rememberId: rememberId
-            	},              /*html, text, json, xml, script*/
-            type : 'post', 
+			},              /*html, text, json, xml, script*/
+            type : 'post',  
             dataType : 'json',
             success : function(rs){
-                if(rs.result === -2) {
+				
+                if(rs.result === -2) {  
                 	alert("이메일 인증이 완료되지 않았습니다.");
                 } else if(rs.result === 1) {
                 	alert("로그인이 성공하엿습니다."); 
