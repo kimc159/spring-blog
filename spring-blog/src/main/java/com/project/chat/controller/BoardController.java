@@ -1,4 +1,4 @@
-package com.project.chat.board;
+package com.project.chat.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.chat.board.BoardVO;
+import com.project.chat.board.PageMaker;
+import com.project.chat.board.SearchCriteria;
 import com.project.chat.board.service.BoardService;
 import com.project.chat.util.ScriptUtils;
 
@@ -52,8 +55,7 @@ public class BoardController {
 	 * 
 	 * model.addAttribute("list", service.list(scri));
 	 * 
-	 * PageMaker pageMaker = new PageMaker(); 
-	 * pageMaker.setCri(scri);
+	 * PageMaker pageMaker = new PageMaker(); pageMaker.setCri(scri);
 	 * pageMaker.setTotalCount(service.totalCount(scri));
 	 * 
 	 * model.addAttribute("pageMaker", pageMaker);
@@ -95,7 +97,7 @@ public class BoardController {
 	@RequestMapping(value = "board/modify")
 	public String modify(Model model, @RequestParam(value = "seq") int seq,
 			@RequestParam(value = "board_writer") String board_writer, HttpSession session,
-			HttpServletResponse response) { 
+			HttpServletResponse response) {
 
 		// �Խñ� �ۼ��ڰ� �ƴϸ� ���� �Ұ�
 		if (!session.getAttribute("user_id").toString().equals(board_writer)) {
@@ -116,7 +118,7 @@ public class BoardController {
 
 		service.updateBoard(bo);
 
-		return "redirect:/boardFile/boardDetail?seq=" + bo.getSeq() + "&writer=" + bo.getWriter(); 
+		return "redirect:/boardFile/boardDetail?seq=" + bo.getSeq() + "&writer=" + bo.getWriter();
 	}
 
 	@RequestMapping(value = "board/delete")
@@ -175,16 +177,16 @@ public class BoardController {
 	 */
 
 	@RequestMapping(value = "boardFile/list")
-	public String fileList(Model model, @ModelAttribute(value="scri") SearchCriteria scri) {
+	public String fileList(Model model, @ModelAttribute(value = "scri") SearchCriteria scri) {
 		List<BoardVO> list = service.fileList(scri);
-		
+
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(scri);
 		pageMaker.setTotalCount(service.totalFileCount(scri));
 
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("list", list);
-		 
+
 		return "boardFile/list";
 	}
 
@@ -196,112 +198,110 @@ public class BoardController {
 
 	@RequestMapping(value = "boardFile/write", method = RequestMethod.POST)
 	public String fileWrite(BoardVO boardVO, MultipartHttpServletRequest mpRequest) throws Exception {
-		
+
 		service.fileWrite(boardVO, mpRequest);
-		
+
 		return "redirect: /boardFile/list";
 	}
-	
+
 	@RequestMapping(value = "boardFile/boardDetail")
-	public String boardFileDetail(Model model, 
-			@RequestParam(value="seq") int seq, 
-			@RequestParam(value="writer") String writer,
-			HttpSession session) {
-		
+	public String boardFileDetail(Model model, @RequestParam(value = "seq") int seq,
+			@RequestParam(value = "writer") String writer, HttpSession session) {
+
 		model.addAttribute("board", service.selectBoardFile(seq));
-		
-		if(!session.getAttribute("user_id").equals(writer)) {
-			Map<String,Object> map = new HashMap<String, Object>(); 
+
+		if (!session.getAttribute("user_id").equals(writer)) {
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("hit_seq", seq);
 			map.put("hit_writer", writer);
 			map.put("hit_replyer", session.getAttribute("user_id"));
-			
+
 			int result = service.selectHitSeq2(map);
-			
-			if(result == 0) {
-				service.boardHit(map); 
+
+			if (result == 0) {
+				service.boardHit(map);
 				service.hitUp2(seq);
 			}
 		}
 
 		return "boardFile/boardDetail";
 	}
-	
-	@RequestMapping(value="boardFile/replyForm")
+
+	@RequestMapping(value = "boardFile/replyForm")
 	public String replyForm2(Model model, BoardVO bo) {
-		
+
 		model.addAttribute("board", bo);
-		 
+
 		return "boardFile/reply";
 	}
-	
-	@RequestMapping(value="boardFile/reply", method = RequestMethod.POST)
-	public String reply2(Model model, BoardVO bo) { 
-		
+
+	@RequestMapping(value = "boardFile/reply", method = RequestMethod.POST)
+	public String reply2(Model model, BoardVO bo) {
+
 		service.replyUp2(bo);
 		service.reply2(bo);
-		
+
 		return "redirect: /boardFile/list";
 	}
-	
-	@RequestMapping(value="boardFile/modify")
+
+	@RequestMapping(value = "boardFile/modify")
 	public String modify2(Model model, BoardVO bo, HttpSession session) {
 		String writer = bo.getWriter();
 		int seq = bo.getSeq();
 		BoardVO board = service.selectBoard2(seq);
-		
-		if(!session.getAttribute("user_id").toString().equals(writer)) {
 
-			 model.addAttribute("url", "/boardFile/list");
-			 model.addAttribute("msg", "접근할 수 없습니다."); 
-			
-			 return "common/redirect"; 
+		if (!session.getAttribute("user_id").toString().equals(writer)) {
+
+			model.addAttribute("url", "/boardFile/list");
+			model.addAttribute("msg", "접근할 수 없습니다.");
+
+			return "common/redirect";
 		} else {
-			model.addAttribute("board", board); 
+			model.addAttribute("board", board);
 		}
-		
+
 		return "boardFile/modify";
 	}
-	@RequestMapping(value="boardFile/modify", method = RequestMethod.POST)
+
+	@RequestMapping(value = "boardFile/modify", method = RequestMethod.POST)
 	public String modify2(BoardVO bo, MultipartHttpServletRequest mpRequest) throws Exception {
 		service.updateBoard2(bo, mpRequest);
-		
+
 		return "redirect: /boardFile/boardDetail?seq=" + bo.getSeq() + "&writer=" + bo.getWriter();
 	}
-	
-	@RequestMapping(value="boardFile/delete")
-	public String deleteBoard2(@RequestParam("seq") int seq, 
-			@RequestParam("writer") String writer,   
-			@RequestParam("boardGroup") int boardGroup,
-			HttpServletResponse response, HttpSession session) {
-		 
-		if(!session.getAttribute("user_id").toString().equals(writer)) { 
+
+	@RequestMapping(value = "boardFile/delete")
+	public String deleteBoard2(@RequestParam("seq") int seq, @RequestParam("writer") String writer,
+			@RequestParam("boardGroup") int boardGroup, HttpServletResponse response, HttpSession session) {
+
+		if (!session.getAttribute("user_id").toString().equals(writer)) {
 
 			try {
 				ScriptUtils.alertAndMovePage(response, "접근할 수 없습니다.", "/boardFile/list");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block 
-				e.printStackTrace(); 
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		} else {
-			
+
 			service.deleteBoardFile(seq);
-		} 
-		
+		}
+
 		return "redirect: /boardFile/list";
 	}
-	@RequestMapping(value="boardFile/download")
+
+	@RequestMapping(value = "boardFile/download")
 	public ModelAndView download(@RequestParam HashMap<Object, Object> params, ModelAndView mv) {
-		
+
 		String fileName = (String) params.get("stored_file_name");
 		String org_file_name = (String) params.get("org_file_name");
 		String fullPath = FILE_SERVER_PATH + "/" + fileName;
 		File file = new File(fullPath);
-		
-		mv.setViewName("downloadView"); 
+
+		mv.setViewName("downloadView");
 		mv.addObject("downloadFile", file);
 		mv.addObject("org_file_name", org_file_name);
-		
+
 		return mv;
 	}
 

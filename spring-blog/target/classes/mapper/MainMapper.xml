@@ -38,8 +38,8 @@
 			memEmail = #{memEmail},
 			memPhone = #{memPhone},
 			authKey = 0,
-			authStatus = 0,
-			salt = #{salt}
+			authStatus = #{authStatus},
+			salt = #{salt} 
 		where 
 			memId = #{memId}
 	</update>
