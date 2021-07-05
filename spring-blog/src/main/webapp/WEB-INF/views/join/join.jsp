@@ -2,10 +2,7 @@
 <%@ include file="../include/header.jsp" %> 
 <div class="formArea">
 
-	<h2>MEMBER JOIN</h2> 
-	풀 안하고 커밋 ㅎㅎ
-	수정 또함 ㅎㅎ
-	sourcetree 충돌 해결 - 다지움 ㅎㅎㅎ
+	<h2>MEMBER JOIN</h2>
 	<form action="join/joinOk" method="post">
 		<div class="join_content">
 			<div class="input_area">
