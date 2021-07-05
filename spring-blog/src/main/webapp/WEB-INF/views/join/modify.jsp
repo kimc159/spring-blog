@@ -5,6 +5,7 @@
 	
 	<form action="/join/modifyOk" method="post">
 		<input type="hidden" id="memId" name="memId" title="ID" maxlength="20" value="${member.memId}">
+		<input type="hidden" name="authStatus" value="${member.authStatus}"> 
 		<div class="join_content">
 			<div class="input_area">
 		        <h3 class="join_title"><label for="memId">아이디</label></h3>

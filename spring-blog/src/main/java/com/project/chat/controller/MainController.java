@@ -52,14 +52,14 @@ public class MainController{
 	}
 	
 	@RequestMapping(value = "/join/modify", method = RequestMethod.GET)
-	public String modify(HttpSession session, Model model) {
+	public String modify(HttpSession session, Model model) { 
 		model.addAttribute("member", service.selectMember(session.getAttribute("user_id").toString()));
 		return "join/modify";
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/login/loginOk")
-	public Map<String, Object> loginOk(@Valid LoginVO loginVO, BindingResult bindingResult,HttpServletResponse response, HttpSession session) {
+	public Map<String, Object> loginOk(@Valid LoginVO loginVO, BindingResult bindingResult, HttpServletResponse response, HttpSession session) {
 		int result;
 		
 		if (bindingResult.hasErrors()) {
