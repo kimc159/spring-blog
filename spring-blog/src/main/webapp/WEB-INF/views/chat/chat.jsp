@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../include/header.jsp" %>
+<%@ include file="../include/header.jsp" %> 
 <div class="chat_room">
 	<h2 class="to_user">${room.to_id} </h2>
 	 <div id="chatBox" class="chatBox"> 
@@ -14,15 +14,15 @@
 				                    <div class="chat-message-group writer-user">
 				                        <div class="chat-messages">
 				                            <div class="message">${list.message}</div> 
-				                            <div class="from"><fmt:formatDate pattern="yyyy-MM-dd H:MM" value="${list.time}" /></div> 
-				                        </div>
+				                            <div class="from"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}" /></div> 
+				                        </div>   
 				                    </div>
 		                		</c:when> 
 	                			<c:otherwise>
 				                    <div class="chat-message-group">  
 				                        <div class="chat-messages"> 
 				                            <div class="message">${list.message}</div> 
-				                            <div class="from"><fmt:formatDate pattern="yyyy-MM-dd H:MM" value="${list.time}" /></div> 
+				                            <div class="from"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}" /></div>  
 				                        </div>
 				                    </div> 
 	                			</c:otherwise>
@@ -40,9 +40,11 @@
 </div>
 	
 	<script>
+	
 		$(function() {
 			$("#chatbox-area").find(".card-content").scrollTop($(".content").innerHeight());  
 		});
+		
 		var from_id = '<c:out value="${currentUser}" />';
 		var to_id = '<c:out value="${room.to_id}" />';
 		var room_id = '<c:out value="${room.room_id}" />';
@@ -78,7 +80,7 @@
 		}
 		
 		// 서버로부터 메시지를 받았을 때 
-		function onMessage(msg) { 
+		function onMessage(msg) {
 			
 			var data = msg.data.split("&");
 			var jsonData = JSON.parse(data[1]);
