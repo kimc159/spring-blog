@@ -2,6 +2,8 @@ package com.project.chat.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -98,7 +100,28 @@ public class ChatController {
 				lastChatMessage.add(chatMessage);	
 			}
 		}
+		System.out.println("---------정렬전-----------");
+		for(ChatMessageVO data : lastChatMessage) {
+			System.out.println(data.getMessage());
+		}
 		
+		// 객체 내림차순 정렬
+		 Collections.sort(lastChatMessage, new Comparator<ChatMessageVO>() {
+	            @Override
+	            public int compare(ChatMessageVO s1, ChatMessageVO s2) {
+	            	int compare = s1.getTime().compareTo(s2.getTime());
+	                if (compare > 0) { 
+	                    return -1;
+	                } else if (compare < 0) { 
+	                    return 1;
+	                }
+	                return 0;
+	            }
+	        });
+			System.out.println("---------정렬후-----------");
+		 for(ChatMessageVO data : lastChatMessage) { 
+				System.out.println(data.getMessage());
+			}
 		model.addAttribute("lastChatMessage", lastChatMessage); 
 		
 		return "/chat/chatRoomList";
@@ -131,5 +154,6 @@ public class ChatController {
 		
 		return "/chat/chatFriend";
 	}
+
 
 }
