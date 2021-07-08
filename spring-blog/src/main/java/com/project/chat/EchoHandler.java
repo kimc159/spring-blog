@@ -85,6 +85,7 @@ public class EchoHandler extends TextWebSocketHandler{
             }
             
         } else {// 채팅방 있을 경우
+        	map.put("room_id", selectRoom.getRoom_id()); // room_id 설정
             chatService.insertMessage(map); 
         }
         

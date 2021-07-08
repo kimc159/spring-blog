@@ -47,7 +47,7 @@
 		
 		var from_id = '<c:out value="${currentUser}" />';
 		var to_id = '<c:out value="${room.to_id}" />';
-		var room_id = '<c:out value="${room.room_id}" />';
+		var room_id = <c:out value="${room.room_id}" />;
 		
 		
 		let sock = new SockJS("http://localhost:8090/echo-ws");
@@ -84,16 +84,22 @@
 			
 			var data = msg.data.split("&");
 			var jsonData = JSON.parse(data[1]); 
-			var room_id = '';
+			var createRoom = data[3];
 			var html = ''; 
 			
-			if(jsonData.room_id === room_id) { 
-				
-				if(from_id === data[0]) {
+			// 첫 채팅방 생성한 사람의 room_id 대입
+			if(jsonData.from_id === from_id && jsonData.to_id === to_id) {
+				room_id = jsonData.room_id;
+			}
+			
+			// 첫 채팅방 생성했거나 room_id가 같으면
+			if((createRoom === "true" && jsonData.from_id === from_id && jsonData.to_id === to_id) || jsonData.room_id === room_id) { 
+				 
+				if(from_id === data[0]) { // 내가 보낸 메시지일 경우
 					html +='<div class="chat-message-group writer-user">';	
-				} else {
+				} else { // 내가 보낸 메시지가 아닐 경우
 					html +='<div class="chat-message-group">';  
-				}
+				} 
 				 
 		        html +='    <div class="chat-messages">';
 		        html +='        <div class="message">' + jsonData.message + '</div>';
