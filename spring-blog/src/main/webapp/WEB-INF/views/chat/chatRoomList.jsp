@@ -29,6 +29,7 @@
 								</a>
 							</c:otherwise>
 						</c:choose>
+						<span class="room_delete" onClick="roomDelete(this, ${list.room_id})">X</span>
 					</li>
 				</c:forEach>  
 			</ul> 
@@ -77,6 +78,37 @@
 		// 서버와 연결을 끊었을 때
 		function onClose(evt) {
 			console.log("socket close");
+		}
+		
+		// 채팅방 삭제
+		function roomDelete(thisobj, room_id) {
+			
+			var $this = thisobj;
+			var check = confirm('대화방을 나가시겠습니까?');  
+			
+			if(confirm) {
+				$.ajax({ 
+					url: "./roomDelete",
+					data: {
+						room_id : room_id
+					},
+					type:"post",
+					dayaType:"json",
+					success : function(rs) {
+						
+						var result = rs.result;
+						
+						if(result === 1) {
+							$this.closest("li").remove();
+							
+						}
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				})
+			}
+			
 		}
 	</script> 
 </body>
