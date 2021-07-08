@@ -3,6 +3,7 @@ package com.project.chat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ import com.project.chat.main.service.ChatService;
 public class EchoHandler extends TextWebSocketHandler{
     
 	@Autowired
-	private ChatService chatServce;
+	private ChatService chatService;
 	
 	//세션 리스트
     private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
@@ -53,25 +54,47 @@ public class EchoHandler extends TextWebSocketHandler{
 
         SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-        String time= format1.format(cal.getTime());
-         
+        String time= format1.format(cal.getTime()); 
+        Boolean createRoom = false; 
         
         
         Map<String, Object>map = new HashMap<String, Object>(); 
         
         map.put("room_id",  Integer.parseInt(String.valueOf(jsonObj.get("room_id"))));
         map.put("message", String.valueOf(jsonObj.get("message")));
-        map.put("to_id", String.valueOf(jsonObj.get("to_id"))); 
-        map.put("from_id", String.valueOf(jsonObj.get("from_id")));
-        map.put("time", time);  
-         
-        chatServce.insertMessage(map); 
+        map.put("to_id", String.valueOf(jsonObj.get("to_id")));  
+        map.put("from_id", String.valueOf(jsonObj.get("from_id"))); 
+        map.put("time", time);
         
-        //모든 유저에게 메세지 출력 
-        for(WebSocketSession sess : sessionList){ 
         
-        	sess.sendMessage(new TextMessage(session.getAttributes().get("user_id")+"&"+message.getPayload()+"&"+time));
-        } 
+        RoomVO room = new RoomVO(); 
+        room.setFrom_id(String.valueOf(jsonObj.get("from_id")));
+        room.setTo_id(String.valueOf(jsonObj.get("to_id")));
+        
+        RoomVO selectRoom = chatService.selectRoom(room);
+        
+        if(selectRoom == null) {// 채팅방 없을 경우
+        	chatService.insertRoom(room); // 채팅방 생성
+        	createRoom = true;
+        	
+        	selectRoom = chatService.selectRoom(room); // 새로 생성한 채팅방 조회
+            
+            if(selectRoom != null) { 
+            	map.put("room_id", selectRoom.getRoom_id()); // room_id 설정
+                chatService.insertMessage(map); // 채팅 메시지 저장
+            }
+            
+        } else {// 채팅방 있을 경우
+            chatService.insertMessage(map); 
+        }
+        
+        JSONObject jsonObject = new JSONObject(map);
+        
+        //모든 유저에게 메세지 출력
+        for(WebSocketSession sess : sessionList){  
+        
+        	sess.sendMessage(new TextMessage(session.getAttributes().get("user_id")+"&"+jsonObject+"&"+time + "&" + createRoom));
+        }   
         
     }
 

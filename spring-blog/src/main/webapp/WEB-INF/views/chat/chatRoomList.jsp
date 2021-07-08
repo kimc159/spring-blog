@@ -14,9 +14,8 @@
 								</div>
 								<a class="text_area" href="/chat?from_id=${list.to_id}&to_id=${list.from_id}">
 									<span class="chat_user">${list.from_id}</span>
-									<span class="last_text">${list.message}</span>
-									<span class="time"><fmt:formatDate pattern="yyyy-MM-dd HH:MM" value="${list.time}"/></span> 
-									
+									<span class="last_text">${list.message}</span> 
+									<span class="time"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}"/></span> 
 								</a>
 							</c:when>  
 							<c:otherwise>
@@ -25,15 +24,60 @@
 								</div>
 								<a class="text_area" href="/chat?from_id=${list.from_id}&to_id=${list.to_id}">
 									<span class="chat_user">${list.to_id}</span>  
-									<span class="last_text">${list.message}</span>  
-									<span class="time"><fmt:formatDate pattern="yyyy-MM-dd HH:MM" value="${list.time}"/></span>
+									<span class="last_text">${list.message}</span>   
+									<span class="time"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}"/></span>
 								</a>
 							</c:otherwise>
 						</c:choose>
 					</li>
-				</c:forEach>
+				</c:forEach>  
 			</ul> 
 		</div>
 	</div> 
+	
+	<script>
+		
+		
+		let sock = new SockJS("http://localhost:8090/echo-ws");
+		sock.onopen = onOpen;
+		sock.onmessage = onMessage; 
+		sock.onclose = onClose;
+		
+		function onOpen() {
+			console.log("socket open");
+		}
+		// 서버로부터 메시지를 받았을 때 
+		function onMessage(msg) {
+			
+			var from_id = JSON.parse(msg.data.split("&")[1]).from_id;
+			var to_id = JSON.parse(msg.data.split("&")[1]).to_id; 
+			var room_id = JSON.parse(msg.data.split("&")[1]).room_id;
+			var last_message = JSON.parse(msg.data.split("&")[1]).message;
+			var time = msg.data.split("&")[2].substring(0, msg.data.split("&")[2].length-3);
+			var create_room = msg.data.split("&")[3];  
+			var roomSelector = $("#findList");
+			var html = '';  
+			 
+			if(create_room === "true") { 
+				html += '<li>';  
+				html += '<div class="img_area">';
+				html += '	<img src="/resources/images/profile_default.jpg" />';
+				html += '</div>';
+				html += '<a class="text_area" href="/chat?from_id='+from_id+'&to_id='+to_id+'" >';
+				html += '	<span class="chat_user">'+from_id+'</span>';
+				html += '	<span class="last_text">'+last_message+'</span>'; 
+				html += '<span class="time">'+time+'</span>'; 
+				html += '</a>';
+				html += '</li>'; 
+				
+				roomSelector.prepend(html); 
+			}
+		} 
+		
+		// 서버와 연결을 끊었을 때
+		function onClose(evt) {
+			console.log("socket close");
+		}
+	</script> 
 </body>
 </html>
