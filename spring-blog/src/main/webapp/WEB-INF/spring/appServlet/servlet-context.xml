@@ -137,7 +137,7 @@
  	
  	<!-- Transaction을 위한 AOP 설정 -->
  	<aop:config proxy-target-class="true">
-		<aop:pointcut id="servicePublicMethod" expression="execution(public * com.project.chat.board..*(..))" /> 
+		<aop:pointcut id="servicePublicMethod" expression="execution(public * com.project.chat..*(..))" /> 
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePublicMethod" />
 	</aop:config>
 
@@ -145,6 +145,7 @@
 	<tx:advice id="txAdvice" transaction-manager="transactionManager"> 
 		<tx:attributes>
 			<tx:method name="deleteBoard2" rollback-for="Exception" />
+			<tx:method name="roomDelete" rollback-for="Exception" /> 
 		</tx:attributes> 
  	</tx:advice> 	
 	
