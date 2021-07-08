@@ -89,6 +89,8 @@ textarea{display:block; width:100%; height:100px; line-height:23px;}
 .chat_room .card-footer button{ display:inline-block;  vertical-align:top; width:100px;  height:40px;  line-height:40px;  background-color: #f2f2f2;  text-align:center; font-size:14px;}
 .chat_room .chat-message-group:after{content:""; display:block; clear:both;}
 .chat_room .chat-message-group .chat-messages{float: left; width: 100%; margin-bottom: 20px;}
+.chat_room .chat-message-group .chat-messages .message{position:relative;}
+.chat_room .chat-message-group .chat-messages .message .message_read{position: absolute; left: -10px; bottom: 5px; color:#000;}
 .chat_room .chat-message-group .message{float: left; padding: 10px; background: #ecf1f8; font-size: 13px; border-radius: 5px; margin-bottom: 3px;}
 .chat_room .chat-messages .from{float: left; display: block; width: 100%; text-align: left; font-size: 11px;}
 .chat_room .chat-thumb img{  border-radius: 40px;}

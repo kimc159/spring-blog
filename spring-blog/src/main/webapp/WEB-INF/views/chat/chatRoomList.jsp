@@ -14,17 +14,17 @@
 								</div>
 								<a class="text_area" href="/chat?from_id=${list.to_id}&to_id=${list.from_id}">
 									<span class="chat_user">${list.from_id}</span>
-									<span class="last_text">${list.message}</span> 
+									<span class="last_text"><span class="message_read">${list.message_read}</span>${list.message}</span> 
 									<span class="time"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}"/></span> 
 								</a>
-							</c:when>  
+							</c:when>
 							<c:otherwise>
 								<div class="img_area">
 									<img src="/resources/images/profile_default.jpg" />
 								</div>
 								<a class="text_area" href="/chat?from_id=${list.from_id}&to_id=${list.to_id}">
-									<span class="chat_user">${list.to_id}</span>  
-									<span class="last_text">${list.message}</span>   
+									<span class="chat_user">${list.to_id}</span>
+									<span class="last_text"><span class="message_read">${list.message_read}</span>${list.message}</span>   
 									<span class="time"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}"/></span>
 								</a>
 							</c:otherwise>

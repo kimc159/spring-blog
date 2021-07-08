@@ -9,6 +9,7 @@ public class ChatMessageVO {
 	private int room_id;
 	private String to_id;
 	private String from_id;
+	private int message_read;
 	
 	public int getMessage_id() {
 		return message_id;
@@ -41,9 +42,16 @@ public class ChatMessageVO {
 		this.to_id = to_id;
 	}
 	public String getFrom_id() {
-		return from_id;
+		return from_id; 
 	}
 	public void setFrom_id(String from_id) {
 		this.from_id = from_id;
 	}
+	public int getMessage_read() {
+		return message_read;
+	}
+	public void setMessage_read(int message_read) {
+		this.message_read = message_read;
+	}
+	
 }

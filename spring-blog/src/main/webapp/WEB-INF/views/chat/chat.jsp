@@ -7,24 +7,24 @@
 	    <div class="card">
 	        <div id="chatbox-area">
 	            <div class="card-content chat-content">
-	                <div class="content"> 
+	                <div class="content">
 	                	<c:forEach var="list" items="${chatList}" varStatus="status">
-	                		<c:choose> 
+	                		<c:choose>
 		                		<c:when test="${currentUser == chatList[status.index].from_id}">
 				                    <div class="chat-message-group writer-user">
 				                        <div class="chat-messages">
-				                            <div class="message">${list.message}</div> 
-				                            <div class="from"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}" /></div> 
-				                        </div>   
+				                            <div class="message"><span class="message_read">${list.message_read}</span> ${list.message}</div> 
+				                            <div class="from"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}" /></div>
+				                        </div> 
 				                    </div>
-		                		</c:when> 
+		                		</c:when>
 	                			<c:otherwise>
-				                    <div class="chat-message-group">  
-				                        <div class="chat-messages"> 
-				                            <div class="message">${list.message}</div> 
-				                            <div class="from"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}" /></div>  
+				                    <div class="chat-message-group">
+				                        <div class="chat-messages">
+				                            <div class="message"><span class="message_read">${list.message_read}</span> ${list.message}</div> 
+				                            <div class="from"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}" /></div>
 				                        </div>
-				                    </div> 
+				                    </div>
 	                			</c:otherwise>
 	                		</c:choose> 
 	                	</c:forEach>
@@ -102,12 +102,13 @@
 				} 
 				 
 		        html +='    <div class="chat-messages">';
-		        html +='        <div class="message">' + jsonData.message + '</div>';
+		        html +='        <div class="message"><span class="message_read">1</span>' + jsonData.message + '</div>';
 		        html +='        <div class="from">'+data[2]+'</div>';
 		        html +='    </div>'; 
 		        html +='</div>';
+		        
 				$("#chatbox-area").find(".content").append(html);   
-				$("#chatbox-area").find(".card-content").scrollTop($(".content").innerHeight());  
+				$("#chatbox-area").find(".card-content").scrollTop($(".content").innerHeight());
 				
 			} else {
 				return;
