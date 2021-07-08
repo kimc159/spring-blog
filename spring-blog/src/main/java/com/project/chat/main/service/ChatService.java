@@ -60,4 +60,14 @@ public class ChatService implements ChatServiceImpl {
 	public List<FriendVO> userFriendSelect(String user_id) {
 		return chatDao.userFriendSelect(user_id);
 	}
+	@Override
+	public int chatMessageDelete(int room_id) {
+		// TODO Auto-generated method stub
+		return chatDao.chatMessageDelete(room_id);
+	}
+	@Override
+	public int roomDelete(int room_id) {
+		// TODO Auto-generated method stub
+		return chatDao.roomDelete(room_id);
+	}
 }

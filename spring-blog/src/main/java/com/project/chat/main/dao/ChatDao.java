@@ -60,5 +60,15 @@ public class ChatDao implements ChatDaoImpl {
 	public List<FriendVO> userFriendSelect(String user_id) { 
 		return session.selectList(namespace + ".userFriendSelect", user_id);
 	}
+	@Override
+	public int chatMessageDelete(int room_id) {
+		// TODO Auto-generated method stub
+		return session.delete(namespace + ".chatMessageDelete", room_id);
+	}
+	@Override
+	public int roomDelete(int room_id) {
+		// TODO Auto-generated method stub
+		return session.delete(namespace + ".roomDelete", room_id);
+	}
 	
 }

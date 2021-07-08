@@ -17,4 +17,6 @@ public interface ChatServiceImpl {
 	int userFriendAdd(Map<String, String> map);
 	int userFriendCount(Map<String, String> map);
 	List<FriendVO> userFriendSelect(String user_id);
+	int chatMessageDelete(int room_id);
+	int roomDelete(int room_id);
 }
