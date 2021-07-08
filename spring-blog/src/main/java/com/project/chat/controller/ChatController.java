@@ -135,7 +135,7 @@ public class ChatController {
  
 	@RequestMapping(value = "/chat/chatFriend")
 	public String chatFriendList(HttpSession session, Model model) { 
-		String login_id = String.valueOf(session.getAttribute("user_id"));
+		String login_id = String.valueOf(session.getAttribute("user_id")); 
 		List<FriendVO> friendList = chatService.userFriendSelect(login_id);
 		
 		model.addAttribute("list", friendList); 
@@ -143,5 +143,17 @@ public class ChatController {
 		return "/chat/chatFriend";
 	}
 
+	@ResponseBody
+	@RequestMapping("/chat/roomDelete")
+	public Map<String, Integer> roomDelete(@RequestParam("room_id") int room_id) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		chatService.chatMessageDelete(room_id);
+		chatService.roomDelete(room_id);
+		
+		map.put("result", 1);
+		
+		return map;
+	}
 
 }
