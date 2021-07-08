@@ -283,4 +283,16 @@
 			, #{friend_id}
 		)
 	</insert>
+	<delete id="chatMessageDelete" parameterType="Integer">
+		delete from
+			chat_message
+		where
+			room_id = #{room_id}
+	</delete>
+	<delete id="roomDelete" parameterType="Integer">
+		delete from
+			chat_room
+		where
+			room_id = #{room_id}
+	</delete>
 </mapper>
