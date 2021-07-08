@@ -83,23 +83,24 @@
 		function onMessage(msg) {
 			
 			var data = msg.data.split("&");
-			var jsonData = JSON.parse(data[1]);
+			var jsonData = JSON.parse(data[1]); 
+			var room_id = '';
 			var html = ''; 
 			
-			if(jsonData.room_id === room_id) {
+			if(jsonData.room_id === room_id) { 
 				
-				if(from_id === data[0]) {  
+				if(from_id === data[0]) {
 					html +='<div class="chat-message-group writer-user">';	
 				} else {
 					html +='<div class="chat-message-group">';  
 				}
-				
+				 
 		        html +='    <div class="chat-messages">';
 		        html +='        <div class="message">' + jsonData.message + '</div>';
-		        html +='        <div class="from">'+data[2]+'</div>';  
+		        html +='        <div class="from">'+data[2]+'</div>';
 		        html +='    </div>'; 
 		        html +='</div>';
-				$("#chatbox-area").find(".content").append(html);  
+				$("#chatbox-area").find(".content").append(html);   
 				$("#chatbox-area").find(".card-content").scrollTop($(".content").innerHeight());  
 				
 			} else {
@@ -109,8 +110,6 @@
 		// 서버와 연결을 끊었을 때
 		function onClose(evt) {
 			console.log("socket close");
-			$("#messageArea").append("연결 끊김");
-	 
 		}
 	</script> 
 </body>

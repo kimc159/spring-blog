@@ -66,20 +66,17 @@ public class ChatController {
 		
 		RoomVO room = chatService.selectRoom(roomVO);
 		List<ChatMessageVO> chatList = null;
+
 		
 		if (room != null) {
-			roomVO.setRoom_id(room.getRoom_id());
-			chatList = chatService.chatList(roomVO);
-		} else {
-			chatService.insertRoom(roomVO);
-			room = chatService.selectRoom(roomVO); 
+			roomVO.setRoom_id(room.getRoom_id()); 
 			chatList = chatService.chatList(roomVO);
 		}
 
-		model.addAttribute("chatList", chatList);
+		model.addAttribute("chatList", chatList);  
 		model.addAttribute("room", roomVO);
 		
-		return "chat/chat";
+		return "chat/chat"; 
 	}
 	
 	@SuppressWarnings("null")
@@ -100,28 +97,19 @@ public class ChatController {
 				lastChatMessage.add(chatMessage);	
 			}
 		}
-		System.out.println("---------정렬전-----------");
-		for(ChatMessageVO data : lastChatMessage) {
-			System.out.println(data.getMessage());
-		}
-		
 		// 객체 내림차순 정렬
 		 Collections.sort(lastChatMessage, new Comparator<ChatMessageVO>() {
-	            @Override
-	            public int compare(ChatMessageVO s1, ChatMessageVO s2) {
-	            	int compare = s1.getTime().compareTo(s2.getTime());
-	                if (compare > 0) { 
-	                    return -1;
-	                } else if (compare < 0) { 
-	                    return 1;
-	                }
-	                return 0;
-	            }
-	        });
-			System.out.println("---------정렬후-----------");
-		 for(ChatMessageVO data : lastChatMessage) { 
-				System.out.println(data.getMessage());
-			}
+            @Override
+            public int compare(ChatMessageVO s1, ChatMessageVO s2) {
+            	int compare = s1.getTime().compareTo(s2.getTime());
+                if (compare > 0) { 
+                    return -1;
+                } else if (compare < 0) { 
+                    return 1;
+                }
+                return 0;
+            }
+        });
 		model.addAttribute("lastChatMessage", lastChatMessage); 
 		
 		return "/chat/chatRoomList";
