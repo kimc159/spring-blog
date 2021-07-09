@@ -121,9 +121,9 @@
 		</message-converters>
 	</annotation-driven> -->
 	
-	<beans:bean id="echoHandler" class="com.project.chat.EchoHandler" />
+	<beans:bean id="socketHandler" class="com.project.chat.SocketHandler" />
 	<websocket:handlers> 
-	    <websocket:mapping handler="echoHandler" path="/echo-ws" />
+	    <websocket:mapping handler="socketHandler" path="/socket" />
 	    <websocket:handshake-interceptors>
 	        <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 	    </websocket:handshake-interceptors>	

@@ -50,7 +50,7 @@
 		var room_id = <c:out value="${room.room_id}" />;
 		
 		
-		let sock = new SockJS("http://localhost:8090/echo-ws");
+		let sock = new SockJS("http://localhost:8090/socket");
 		sock.onopen = onOpen;
 		sock.onmessage = onMessage; 
 		sock.onclose = onClose;  

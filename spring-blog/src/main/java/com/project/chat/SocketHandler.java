@@ -21,8 +21,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.project.chat.main.service.ChatService;
 
-@RequestMapping("/echo")
-public class EchoHandler extends TextWebSocketHandler{
+@RequestMapping("/socket") 
+public class SocketHandler extends TextWebSocketHandler{
     
 	@Autowired
 	private ChatService chatService;
@@ -30,7 +30,7 @@ public class EchoHandler extends TextWebSocketHandler{
 	//세션 리스트
     private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 
-    private static Logger logger = LoggerFactory.getLogger(EchoHandler.class); 
+    private static Logger logger = LoggerFactory.getLogger(SocketHandler.class); 
     
     //클라이언트가 연결 되었을 때 실행
     @Override
@@ -47,7 +47,7 @@ public class EchoHandler extends TextWebSocketHandler{
         String currentUser = (String) session.getAttributes().get("user_id"); 
         String userMessage = message.getPayload();
         
-        JSONParser parser = new JSONParser();
+        JSONParser parser = new JSONParser(); 
         Object obj = parser.parse(userMessage);
         JSONObject jsonObj = (JSONObject) obj;
         
