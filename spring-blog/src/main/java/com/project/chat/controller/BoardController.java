@@ -2,9 +2,7 @@ package com.project.chat.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +97,7 @@ public class BoardController {
 			@RequestParam(value = "board_writer") String board_writer, HttpSession session,
 			HttpServletResponse response) {
 
-		// �Խñ� �ۼ��ڰ� �ƴϸ� ���� �Ұ�
+		
 		if (!session.getAttribute("user_id").toString().equals(board_writer)) {
 			try {
 				ScriptUtils.alertAndMovePage(response, "접근할 수 없습니다.", "/board/list");
@@ -126,7 +124,6 @@ public class BoardController {
 			@RequestParam(value = "board_writer") String board_writer, HttpSession session,
 			HttpServletResponse response) {
 
-		// �Խñ� �ۼ��ڰ� �ƴϸ� ���� �Ұ�
 		if (!session.getAttribute("user_id").toString().equals(board_writer)) {
 			try {
 				ScriptUtils.alertAndMovePage(response, "접근할 수 없습니다.", "/board/list");
@@ -148,7 +145,6 @@ public class BoardController {
 
 		model.addAttribute("board", service.selectBoard(seq));
 
-		// �� ������ ����Ȯ��
 		if (!session.getAttribute("user_id").toString().equals(writer)) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("hit_seq", seq);
@@ -159,7 +155,6 @@ public class BoardController {
 
 			System.out.println("hit : " + selectHit);
 
-			// ��ȸ�� �ߺ� Ȯ��
 			if (selectHit == 0) {
 				service.hitUp(seq);
 

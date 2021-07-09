@@ -51,7 +51,6 @@ public class EchoHandler extends TextWebSocketHandler{
         Object obj = parser.parse(userMessage);
         JSONObject jsonObj = (JSONObject) obj;
         
-
         SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         String time= format1.format(cal.getTime()); 

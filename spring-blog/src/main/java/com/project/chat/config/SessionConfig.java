@@ -13,7 +13,6 @@ public class SessionConfig implements HttpSessionListener{
 
 	public static final Map<String, HttpSession> sessions = new ConcurrentHashMap<>();
 	
-	 //�ߺ��α��� �����
     public synchronized static String getSessionidCheck(String type, String compareId){
     	 String result = "";
     	 

@@ -5,17 +5,16 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 /**
- * SHA-256 ��ȣȭ
+ * SHA-256 
  * 
- * @author Minchang Jang
  *
  */
 public class SHA256Util {
 
 	/**
-	 * SHA-256 ��ȣȭ ��
-	 * @param source ����
-	 * @param salt(String) SALT ��
+	 * SHA-256 
+	 * @param source
+	 * @param salt(String) SALT
 	 * @return
 	 */
 	public static String getEncrypt(String source, String salt) {
@@ -23,9 +22,9 @@ public class SHA256Util {
 	}
 	
 	/**
-	 * SHA-256 ��ȣȭ ��
-	 * @param source ����
-	 * @param salt(byte[]) SALT ��
+	 * SHA-256 
+	 * @param source 
+	 * @param salt(byte[]) SALT
 	 * @return
 	 */
 	public static String getEncrypt(String source, byte[] salt) {
@@ -39,7 +38,6 @@ public class SHA256Util {
 		System.arraycopy(salt, 0, bytes, a.length, salt.length);
 		
 		try {
-			// ��ȣȭ ��� ���� �޼ҵ�
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(bytes);
 			
@@ -59,7 +57,7 @@ public class SHA256Util {
 	}
 	
 	/**
-	 * SALT�� ���´�.
+	 * SALT
 	 * @return
 	 */
 	public static String generateSalt() {
@@ -70,7 +68,6 @@ public class SHA256Util {
 		
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < salt.length; i++) {
-			// byte ���� Hex ������ �ٲٱ�.
 			sb.append(String.format("%02x",salt[i]));
 		}
 		
