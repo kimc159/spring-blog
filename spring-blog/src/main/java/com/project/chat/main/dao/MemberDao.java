@@ -50,22 +50,18 @@ public class MemberDao implements MemberDaoImpl{
 	}
 	@Override
 	public int modify(MemberVO member) {
-		// TODO Auto-generated method stub
 		return session.update(namespace + ".modify", member);
 	}
 	@Override
 	public MemberVO selectMember(String memberId) {
-		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".selectMember", memberId);
 	}
 	@Override
 	public int joinConfirm(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return session.update(namespace + ".joinConfirm", map);
 	}
 	@Override
 	public int memberAuthStatus(LoginVO loginVO) {
-		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".memberAuthStatus", loginVO);
 	}
 }

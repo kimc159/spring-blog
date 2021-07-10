@@ -21,27 +21,22 @@ public class ChatDao implements ChatDaoImpl {
 	
 	@Override
 	public RoomVO selectRoom(RoomVO roomVO) {
-		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".selectRoom", roomVO);
 	}
 	@Override
 	public int insertRoom(RoomVO roomVO) {
-		// TODO Auto-generated method stub
 		return session.insert(namespace + ".insertRoom", roomVO);
 	}
 	@Override
 	public List<ChatMessageVO> chatList(RoomVO roomVO) {
-		// TODO Auto-generated method stub
 		return session.selectList(namespace + ".chatList", roomVO);
 	}
 	@Override
 	public ChatMessageVO lastChatList(RoomVO roomVO) {
-		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".lastChatList", roomVO);
 	}
 	@Override
 	public int insertMessage(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return session.insert(namespace + ".insertMessage", map);
 	}
 	@Override
@@ -62,12 +57,10 @@ public class ChatDao implements ChatDaoImpl {
 	}
 	@Override
 	public int chatMessageDelete(int room_id) {
-		// TODO Auto-generated method stub
 		return session.delete(namespace + ".chatMessageDelete", room_id);
 	}
 	@Override
 	public int roomDelete(int room_id) {
-		// TODO Auto-generated method stub
 		return session.delete(namespace + ".roomDelete", room_id);
 	}
 	
