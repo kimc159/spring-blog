@@ -128,22 +128,18 @@ public class MemberService implements MemberServiceImpl{
 	}
 	@Override
 	public int modify(MemberVO member) {
-		// TODO Auto-generated method stub
 		return memberDao.modify(member);
 	}
 	@Override
 	public MemberVO selectMember(String memberId) {
-		// TODO Auto-generated method stub
 		return memberDao.selectMember(memberId);
 	}
 	@Override
 	public int joinConfirm(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return memberDao.joinConfirm(map);
 	}
 	@Override
 	public int memberAuthStatus(LoginVO loginVO) {
-		// TODO Auto-generated method stub
 		return memberDao.memberAuthStatus(loginVO);
 	}
 }

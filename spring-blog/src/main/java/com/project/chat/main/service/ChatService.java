@@ -25,23 +25,18 @@ public class ChatService implements ChatServiceImpl {
 
 	@Override
 	public int insertRoom(RoomVO roomVO) {
-		// TODO Auto-generated method stub
 		return chatDao.insertRoom(roomVO);
 	}
 	@Override
 	public List<ChatMessageVO> chatList(RoomVO roomVO) {
-		// TODO Auto-generated method stub
 		return chatDao.chatList(roomVO);
 	}
 	@Override
 	public ChatMessageVO lastChatList(RoomVO roomVO) {
-		// TODO Auto-generated method stub
 		return chatDao.lastChatList(roomVO);
 	}
 	@Override
 	public int insertMessage(Map<String, Object> map) {
-		
-		// TODO Auto-generated method stub
 		return chatDao.insertMessage(map);
 	}
 	@Override
@@ -62,12 +57,10 @@ public class ChatService implements ChatServiceImpl {
 	}
 	@Override
 	public int chatMessageDelete(int room_id) {
-		// TODO Auto-generated method stub
 		return chatDao.chatMessageDelete(room_id);
 	}
 	@Override
 	public int roomDelete(int room_id) {
-		// TODO Auto-generated method stub
 		return chatDao.roomDelete(room_id);
 	}
 }
