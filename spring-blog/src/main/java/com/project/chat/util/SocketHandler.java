@@ -1,9 +1,8 @@
-package com.project.chat;
+package com.project.chat.util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +18,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.project.chat.RoomVO;
 import com.project.chat.main.service.ChatService;
 
 @RequestMapping("/socket") 

@@ -121,7 +121,7 @@
 		</message-converters>
 	</annotation-driven> -->
 	
-	<beans:bean id="socketHandler" class="com.project.chat.SocketHandler" />
+	<beans:bean id="socketHandler" class="com.project.chat.util.SocketHandler" />
 	<websocket:handlers> 
 	    <websocket:mapping handler="socketHandler" path="/socket" />
 	    <websocket:handshake-interceptors>
