@@ -1,42 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="../include/header.jsp" %>
-	<div class="user_find_area">
-		<h2>채팅</h2>
-		<div class="find_list"> 
-			<ul class="list type_chat" id="findList">
-				<c:forEach items="${lastChatMessage}" var="list"> 
-					<li>
-						<c:choose>
-							<c:when test="${currentUser eq list.to_id}">
-								<div class="img_area">
-									<img src="/resources/images/profile_default.jpg" />
-								</div>
-								<a class="text_area" href="/chat?from_id=${list.to_id}&to_id=${list.from_id}">
-									<span class="chat_user">${list.from_id}</span>
-									<span class="last_text"><span class="message_read">${list.message_read}</span>${list.message}</span> 
-									<span class="time"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}"/></span> 
-								</a>
-							</c:when>
-							<c:otherwise>
-								<div class="img_area">
-									<img src="/resources/images/profile_default.jpg" />
-								</div>
-								<a class="text_area" href="/chat?from_id=${list.from_id}&to_id=${list.to_id}">
-									<span class="chat_user">${list.to_id}</span>
-									<span class="last_text"><span class="message_read">${list.message_read}</span>${list.message}</span>   
-									<span class="time"><fmt:formatDate pattern="yyyy-MM-dd H:mm" value="${list.time}"/></span>
-								</a>
-							</c:otherwise>
-						</c:choose>
-						<span class="room_delete" onClick="roomDelete(this, ${list.room_id})">X</span>
-					</li>
-				</c:forEach>  
-			</ul> 
-		</div>
-	</div> 
-	
-	<script>
+	pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp"%>
+<div class="user_find_area">
+	<h2>채팅</h2>
+	<div class="find_list">
+		<ul class="list type_chat" id="findList">
+			<c:forEach items="${lastChatMessage}" var="list">
+				<li><c:choose>
+						<c:when test="${currentUser eq list.to_id}">
+							<div class="img_area">
+								<img src="/resources/images/profile_default.jpg" />
+							</div>
+							<a class="text_area"
+								href="/chat?from_id=${list.to_id}&to_id=${list.from_id}"> <span
+								class="chat_user">${list.from_id}</span> <span class="last_text"><span
+									class="message_read">${list.message_read}</span>${list.message}</span>
+								<span class="time"><fmt:formatDate
+										pattern="yyyy-MM-dd H:mm" value="${list.time}" /></span>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<div class="img_area">
+								<img src="/resources/images/profile_default.jpg" />
+							</div>
+							<a class="text_area"
+								href="/chat?from_id=${list.from_id}&to_id=${list.to_id}"> <span
+								class="chat_user">${list.to_id}</span> <span class="last_text"><span
+									class="message_read">${list.message_read}</span>${list.message}</span>
+								<span class="time"><fmt:formatDate
+										pattern="yyyy-MM-dd H:mm" value="${list.time}" /></span>
+							</a>
+						</c:otherwise>
+					</c:choose> <span class="room_delete"
+					onClick="roomDelete(this, ${list.room_id})"> 
+					   <img src="/resources/images/img_close.png" alt="" />
+					</span></li>
+			</c:forEach>
+		</ul>
+	</div>
+</div>
+
+<script>
 		
 		
 		let sock = new SockJS("http://localhost:8090/socket");
@@ -110,6 +114,6 @@
 			}
 			
 		}
-	</script> 
+	</script>
 </body>
 </html>
