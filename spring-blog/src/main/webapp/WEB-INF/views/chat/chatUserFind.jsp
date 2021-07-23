@@ -1,20 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="../include/header.jsp" %>
-	<div class="user_find_area">
-		<h2>친구 찾기</h2>
-		<div class="find_search">
-			<input type="text" id="findUserName">
-			<button type="button" onClick="chatUserFind()">찾기</button>
-		</div>
-		<div class="find_list">
-			<ul class="list type_chat" id="findList">
-			</ul>  
-		</div>
+	pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp"%>
+<div class="user_find_area">
+	<h2>친구 찾기</h2>
+	<div class="find_search">
+		<input type="text" id="findUserName">
+		<button type="button" onClick="chatUserFind()">찾기</button>
 	</div>
-	<script>
+	<div class="find_list">
+		<ul class="list type_chat" id="findList">
+		</ul>
+	</div>
+</div>
+<script>
 		function chatUserFind() {
 			var memID = $("#findUserName").val();
+			
+			if(memID == '') {alert("값을 입력해 주세요."); return null;}
 			
 			$.ajax({ 
 				url: "./chatUserFind",
