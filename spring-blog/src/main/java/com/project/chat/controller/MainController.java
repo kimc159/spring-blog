@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -35,6 +36,20 @@ public class MainController{
 	@Autowired
 	private MailSendService mss;
 	
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String main(HttpServletRequest request) {
+        HttpSession session  = request.getSession();
+        
+        if(session.getAttribute("user_id") == null) { // 로그인 전 메인 타이틀 클릭시 login 페이지 이동
+            
+            return "login/login"; 
+        } else { // 로그인 후 메인 타이틀 클릭시 게시판 리스트 페이지 이동
+            return "redirect:/board/list";
+        }
+        
+    }
+    
 	@RequestMapping(value = "/redirect")
 	public String redirect() {
 		return "common/redirect";
@@ -54,7 +69,7 @@ public class MainController{
 	@RequestMapping(value = "/join/modify", method = RequestMethod.GET)
 	public String modify(HttpSession session, Model model) { 
 		model.addAttribute("member", service.selectMember(session.getAttribute("user_id").toString()));
-		return "join/modify";
+		return "join/modify"; 
 	}
 
 	@ResponseBody
