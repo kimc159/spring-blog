@@ -25,11 +25,18 @@ public class ScriptUtils {
 		out.println("<script>alert('"+message+"'); location.href='"+movePage+"';</script>");
 		out.flush();
 	}
-
+ 
 	public static void alertAndbackPage(HttpServletResponse response, String message) throws IOException {
 		init(response);
 		PrintWriter out = response.getWriter();
 		out.println("<script>alert('"+message+"'); history.back(-1);</script>");
 		out.flush();
 	}
+
+    public static void movePage(HttpServletResponse response, String movePage) throws IOException {
+        init(response);
+        PrintWriter out = response.getWriter();
+        out.println("location.href='"+movePage+"';</script>");
+        out.flush();
+    }
 }
