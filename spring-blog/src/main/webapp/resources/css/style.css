@@ -92,6 +92,7 @@ textarea {
 
 .login_btn_area {
 	margin-top: 5px;
+	position:relative;
 }
 
 .login_btn_area .save_id {
@@ -99,7 +100,10 @@ textarea {
 }
 
 .login_btn_area .find_area {
-	margin-top: 5px;
+	position:absolute;
+	right:0;
+	top:0;
+	line-height:0; 
 }
 
 .login_btn_area .find_area button {
