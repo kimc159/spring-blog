@@ -84,10 +84,6 @@
 						id="memPhone" name="memPhone" title="휴대전화" class="int"
 						maxlength="40">
 					</span>
-					<div class="error_next_box" id="phoneMsg" style="display: none"
-						aria-live="assertive">
-						</span>
-					</div>
 					<div class="btnArea">
 						<button type="submit" id="btnJoin" class="btn_type btn_primary">
 							<span>가입하기</span>
