@@ -144,3 +144,10 @@ function removeFile(thisobj) {
 	
 	$this.parent(".uploaded_file").css("display", "none").closest(".boardInputArea").find(".select_file").css("display", "block"); 
 }
+
+// 숫자만 입력받기
+function checkInputNum(){
+    if ((event.keyCode < 48) || (event.keyCode > 57)){
+        event.returnValue = false;
+    }
+}

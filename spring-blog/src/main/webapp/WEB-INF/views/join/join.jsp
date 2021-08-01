@@ -49,7 +49,7 @@
 					<div class="bir_yy">
 						<span class="ps_box"> <input type="text" id="yy"
 							placeholder="년(4자)" aria-label="년(4자)" class="int"
-							name="memBirthDay">
+							name="memBirthDay" onkeyPress="checkInputNum();">
 						</span>
 					</div>
 				</div>
@@ -80,9 +80,9 @@
 					<h3 class="join_title">
 						<label for="memPhone">휴대전화</label>
 					</h3>
-					<span class="ps_box box_right_space"> <input type="tel"
+					<span class="ps_box box_right_space"> <input type="text"
 						id="memPhone" name="memPhone" title="휴대전화" class="int"
-						maxlength="40">
+						maxlength="40" onkeyPress="checkInputNum();">
 					</span>
 					<div class="btnArea">
 						<button type="submit" id="btnJoin" class="btn_type btn_primary">
@@ -90,6 +90,8 @@
 						</button>
 					</div>
 				</div>
+			</div>
+		</div>
 	</form>
 </div>
 </body>
