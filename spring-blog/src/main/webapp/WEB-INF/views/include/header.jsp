@@ -10,21 +10,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>블로그 사이트</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/global.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style.css">
-
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-2.2.4.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/main.js?js"></script>
-<!-- sockJS -->
-<script
-	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<c:set var="currentUser" value="${login.memId}" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>블로그 사이트</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/global.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/main.js?js"></script>
+	<!-- sockJS -->
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<c:set var="currentUser" value="${login.memId}" />
 </head>
 <body>
 	<div id="header" class="header">
@@ -45,8 +39,12 @@
 					<li><a href="/join" data-trans="회원가입">회원가입</a></li>
 				</c:if>
 				<c:if test="${not empty login.memId}">
-					<li><span><em data-trans="${login.memId}">${login.memId}</em>
-							<em data-trans="님">님</em></span></li>
+					<li>
+						<span>
+							<em data-trans="${login.memId}">${login.memId}</em>
+							<em data-trans="님">님</em>
+						</span>
+					</li>
 					<li><a href="/board/list" data-trans="일반게시판">일반게시판</a></li>
 					<li><a href="/boardFile/list" data-trans="파일게시판">파일게시판</a></li>
 					<li><a href="/join/modify" data-trans="정보수정">정보수정</a></li>
